@@ -1,0 +1,131 @@
+.module {
+    position: relative;
+    width: 100%;
+    table {
+        tr {
+            td {
+                position: relative;
+                height: 75px;
+                .content {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    display: inline-block;
+                    border: 1px solid #bbb;
+                    z-index: 1;
+                    background-repeat: none;
+                    background-size: cover;
+                    background-position: center;
+                }
+                .content.in-template {
+                    @include borde-color-gradient-blue;
+                }
+            }
+        }
+    }
+    .btn-group {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 45px;
+        margin: auto;
+        display: none;
+        line-height: 45px;
+        text-align: center;
+    }
+    .module-wrap {
+        position: relative;
+        @include display-flex;
+        @include flex-align-center;
+        width: 100%;
+        text-align: center;
+        border: 0;
+        background-color: #fff;
+        &>div.module-unit {
+            @include flex(1);
+            &:first-of-type {
+                border-left: 0;
+            }
+            &:last-of-type {
+                border-right: 0;
+            }
+        }
+        &:hover {
+            &>div.btn-group {
+                display: inline-block;
+            }
+        }
+        .btn-group {
+            .reorder-container {
+                position: absolute;
+                top: 0;
+                right: 0;
+                height: 100%;
+                .reoder-btn {
+                    width: 20px;
+                    height: 20px;
+                    display: block;
+                }
+            }
+        }
+    }
+    .module-wrap.hasborder {
+        @include borde-color-gradient-blue;
+    }
+    .module-wrap.active {
+        border: 1px solid #2196f3 !important;
+    }
+    .module-wrap.in-content {
+        box-shadow: none;
+        &>div.module-unit {
+            position: relative;
+            .btn-group {
+                border: 0;
+                box-shadow: none !important;
+            }
+        }
+        &>div.module-unit:hover {
+            .btn-group {
+                display: inline-block;
+            }
+        }
+    }
+    &>div {
+        position: relative;
+        @include display-flex;
+        @include flex-align-center;
+        width: 100%;
+        text-align: center;
+        &>div.module-unit {
+            @include flex(1);
+            border-left: 1px solid #bbb;
+            &:first-of-type {
+                border-left: 0;
+            }
+            &:last-of-tyoe {
+                border-left: 0;
+            }
+        }
+    }
+    .module_1 {}
+    .module_2 {}
+    .module_3 {}
+    .module_11,
+    .module_12,
+    .module_13,
+    .module_14 {
+        .module-unit {
+            border: 0 !important;
+        }
+        .module-unit-children-unit {
+            border: 0 !important;
+        }
+    }
+    &:hover {
+        .module—wrap>.btn-group {
+            display: inline-block;
+        }
+    }
+}

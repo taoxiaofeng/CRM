@@ -1,0 +1,60 @@
+.account {
+    .header {
+        overflow: hidden;
+        .btn_upload-permission-groups {
+            float: right;
+            margin-left: 8px;
+        }
+        .btn_upload-permissions {
+            float: right;
+            margin-left: 8px;
+        }
+        .btn_download-excel {
+            float: right;
+            margin-left: 8px;
+        }
+        .btn-managerole {
+            float: right;
+            margin-left: 8px;
+        }
+        .btn-addacount {
+            float: right;
+        }
+    }
+    .account-table {
+        margin-top: 10px;
+    }
+    .modal-header {}
+    .modal-title {
+        color: #2aabd2;
+    }
+    .add-name {
+        display: block;
+    }
+    .input-name,
+    .input-mobile,
+    .input-pass {
+        width: 70%;
+        display: inline;
+    }
+    .input-name,
+    .input-pass {
+        margin-left: 16px;
+    }
+    .input-mobile {
+        margin-left: 1.60px;
+    }
+    .name-mobile,
+    .input-mobile,
+    .name-pass,
+    .input-pass {
+        margin-top: 10px;
+    }
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px white inset;
+        -webkit-text-fill-color: #333;
+    }
+    .ng-table-filters {
+        display: none;
+    }
+}

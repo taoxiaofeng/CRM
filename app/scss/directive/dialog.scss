@@ -1,0 +1,26 @@
+.dialog {
+    background-color: $white-color;
+    .md-toolbar-tools {
+        position: relative;
+        .glyphicon-remove {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            text-align: center;
+            width: 40px;
+            height: 20px;
+            right: 0;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+        }
+    }
+    .dialog-content {
+        padding: 15px;
+    }
+}
+
+dialog {
+    display: none;
+}

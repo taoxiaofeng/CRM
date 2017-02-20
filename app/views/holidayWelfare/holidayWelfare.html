@@ -1,0 +1,70 @@
+<div ng-controller="holidayWelfare" class="holiday-welfare" id="holidayWelfare">
+    <div class="header-view">
+        <!-- <h1 class="holiday-welfare-title">节假日福利</h1> -->
+        <div class="query">
+            <company-searcher select-company="searchByCompany(company)"></company-searcher>
+            <div class="input-starttime">
+                <date-picker time-stamp="queryParams.startTime"></date-picker>
+            </div>
+            <span class="separator">&nbsp;至&nbsp;</span>
+            <div class="input-endtime">
+                <date-picker time-stamp="queryParams.endTime"></date-picker>
+            </div>
+            <button class="btn btn-primary btn-search" ng-click="getHolidayWelfareList(queryParams)">查询</button>
+            <div class="btn-wrap">
+                <button class="btn  btn-primary  search-btn" ng-click="bathMultiPrint()">批量打印</button>
+            </div>
+        </div>
+    </div>
+    <table ng-table="tableParams"
+           class="table table-condensed table-bordered table-hover ngtable  account-table table-mini table-holiday"
+           id="holiday-welfare-order-table"
+           show-filter="true">
+        <thead>
+        <th>序号</th>
+        <th>
+            <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1" ng-click="selectAllOrder($event,$data)" />
+            <label for="checkbox_all"></label>
+        </th>
+        <th>下单时间</th>
+        <th>预约送货时间</th>
+        <th>下单企业</th>
+        <th>下单金额</th>
+        <th>
+            <drop-down list={{settlementStatusList}} desc-field='desc' prevent-auto-selected="true" default-item={{settlementStatusList[0]}}
+                       btn-style="btn-link" select="_settlementWay(item)"></drop-down>
+        </th>
+        <th>
+            <drop-down list={{orderStatusList}} desc-field='desc' prevent-auto-selected="true" default-item={{orderStatusList[0]}}
+                       btn-style="btn-link" select="_orderStatus(item)"></drop-down>
+        </th>
+        <th>编辑</th>
+        </thead>
+        <tr ng-repeat="order in $data" ng-init="index = $index">
+            <!--<td>
+                <input type="checkbox" ng-model="x.selected"/>
+            </td>-->
+            <!--<td>{{$index + 1}}</td>-->
+            <td>{{order.index}}</td>
+            <td>
+                <input type="checkbox" ng-model="order.checked" id="{{'checkbox_'+order.order.id}}" class="chk_1" ng-click="updateSelection($event,order.order)" />
+                <label for="{{'checkbox_'+order.order.id}}"></label>
+            </td>
+            <td>{{order.order.createTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <td>2011-11-14 18:30:00</td>
+            <td>{{order.order.companyName}}</td>
+            <td>{{order.order.price/100}}</td>
+            <td>{{order.order.status==ORDER_STATUS.WAITING_PAYMENT?'-':(PAYMENT_STATUS.DESC[order.order.payChannel]||'-')}}</td>
+            <td>{{ORDER_STATUS.DESC[order.order.status]||'-'}}</br></span></td>
+            <td>
+                <button class="btn btn-default btn-sm" href="javascript:;" ng-click="orderDetail(order)"><span
+                        class="glyphicon glyphicon-list-alt"></span>
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-default btn-sm" href="javascript:;" ng-click="printOrder(order.order)"><span
+                        class="glyphicon glyphicon-print"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

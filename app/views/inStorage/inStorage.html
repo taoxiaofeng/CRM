@@ -1,0 +1,403 @@
+<div ng-controller="inStorage" class="inStorage container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-searcher">
+                <input type="text" ng-model="queryParams.companyName" class="form-control input-company-search" uib-typeahead="state as state.companyName for state in getTypeHeadOptions($viewValue) | limitTo:10" ng-model-options="typeHeadConfigs" typeahead-loading="loadingOptions" typeahead-on-select="selectTypeHeadOptions($item, $model, $label, $event)" typeahead-no-results="noResults" name="companySearch" placeholder="输入公司名称" />
+                <div class="time-select">
+                    <input type="date" class="input-starttime" placeholder="开始时间" ng-model="queryParams.startTime" />-
+                    <input type="date" class="input-endtime" placeholder="结束时间" ng-model="queryParams.endTime" />
+                </div>
+                <button class="btn btn-default btn-search" ng-click="searchInStorage(queryParams)">查询</button>
+            </div>
+        </div>
+    </div>
+    <div flex="100%" layout="column" class="table-wrap">
+        <table ng-table="tableParams" class="table table-condensed table-bordered table-hover ngtable  account-table table-mini  storage-table" show-filter="true">
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>生成时间</th>
+                <th>更新时间</th>
+                <th>企业名称</th>
+                <th>货架名称</th>
+                <th>
+                    <drop-down list={{ticketData}} default-item={{curTicketData}} desc-field="name" btn-style="btn-link" select="orderTypeSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{opeaterData}} default-item={{curOpeaterData}} desc-field="name" btn-style="btn-link" select="managerSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{orderStateData}} default-item={{curOrderStateData}} desc-field="name" btn-style="btn-link" select="orderStatusSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{stockManagerData}} default-item={{curStockManagerData}} desc-field="name" btn-style="btn-link" select="stockManagerSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{modifiedData}} default-item={{curModifiedData}} desc-field="name" btn-style="btn-link" select="modifiedSelect(item)"></drop-down>
+                </th>
+                <th>查看
+                    <br>明细</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in $data">
+                <td>{{item.index}}</td>
+                <td>{{item.createTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+                <td>{{item.updateTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+                <td>{{item.companyName}}</td>
+                <td>{{item.shelfName}}</td>
+                <td>{{ticketType.DESC[item.orderType]}}</td>
+                <td>{{item.creatorName}}</td>
+                <td>{{CONSTANTS.IN_STORAGE_STATE.DESC[item.orderState]}}</td>
+                <td>{{item.confirmName || "-"}}</td>
+                <td>{{CONSTANTS.IN_STORAGE_MODIFYSTATE.DESC[item.modified]}}</td>
+                <td>
+                    <button class="btn btn-default btn-sm" href="javascript:;" ng-click="viewDetail(item)"><span class="glyphicon glyphicon-list-alt"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<div class="two-table">
+        <table ng-table="tableParams" class="table table-condensed table-bordered table-hover  storage-table">
+            &lt;!&ndash;<colgroup>
+                <col width="3%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="10%" />
+                <col width="5%" />
+            </colgroup>&ndash;&gt;
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>生成时间</th>
+                <th>更新时间</th>
+                <th>企业名称</th>
+                <th>货架名称</th>
+                <th>
+                    <drop-down list={{ticketData}} default-item={{curTicketData}} desc-field="name" btn-style="btn-link" select="orderTypeSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{opeaterData}} default-item={{curOpeaterData}} desc-field="name" btn-style="btn-link" select="managerSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{orderStateData}} default-item={{curOrderStateData}} desc-field="name" btn-style="btn-link" select="orderStatusSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{stockManagerData}} default-item={{curStockManagerData}} desc-field="name" btn-style="btn-link" select="stockManagerSelect(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{modifiedData}} default-item={{curModifiedData}} desc-field="name" btn-style="btn-link" select="modifiedSelect(item)"></drop-down>
+                </th>
+                <th>查看
+                    <br>明细</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in $data">
+                <td>{{item.index}}</td>
+                <td>{{item.createTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+                <td>{{item.updateTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+                <td>{{item.companyName}}</td>
+                <td>{{item.shelfName}}</td>
+                <td>{{ticketType.DESC[item.orderType]}}</td>
+                <td>{{item.creatorName}}</td>
+                <td>{{CONSTANTS.IN_STORAGE_STATE.DESC[item.orderState]}}</td>
+                <td>{{item.confirmName || "-"}}</td>
+                <td>{{CONSTANTS.IN_STORAGE_MODIFYSTATE.DESC[item.modified]}}</td>
+                <td>
+                    <button class="btn btn-default btn-sm" href="javascript:;" ng-click="viewDetail(item)"><span class="glyphicon glyphicon-list-alt"></span></button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>-->
+    <div id="exportExcelWrap" class="hidden"></div>
+    <!--送货修改确认单详情(未确认/已确认)Modal-->
+    <script type="text/ng-template" id="modal-delivery-modify-confirm-ticket">
+        <div class="modal-header">
+            <button type="button" class="close close-xx" ng-click="cancel()"><span class="close-xxx" aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body form-inline">
+            <table class="table table-bordered table-delivery-modify-confirm-ticket">
+                <thead>
+                    <tr>
+                        <th colspan="10" class="ticket-title">好品送货修改确认单({{stockOrderInfoData.createTime| date: "yyyy-MM-dd" }})</th>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="company-name">客户名称: <span class="value-text">{{stockOrderInfoData.companyName}}</span></th>
+                        <th colspan="5" class="shelf-name">货架: <span class="value-text">{{stockOrderInfoData.shelfName}}</span></th>
+                    </tr>
+                    <tr>
+                        <th colspan="5" class="company-addr delivery-name">关联送货单:
+                            <button class="btn btn-link value-text" ng-click="checkDeliveryOrder(stockOrderInfoData.refId)">送货单-{{stockOrderInfoData.companyName+'-'+stockOrderInfoData.shelfName}}</button>
+                        </th>
+                        <th colspan="5" class="contact-tel"><span class="value-text">
+                            创建时间：{{stockOrderInfoData.createTime | date: "yyyy-MM-dd HH:mm:ss"}}<br/>
+                            更新时间：{{stockOrderInfoData.updateTime | date: "yyyy-MM-dd HH:mm:ss"}}<br/>  
+                            配送操作人:{{stockOrderInfoData.creatorName}}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="10" class="modified-title">修改明细</th>
+                    </tr>
+                    <tr ng-if="stockOrderInfoData.orderState==0">
+                        <th colspan="10"><a href="javascript:;" ng-click="addProductWin()">+新增商品</a></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-delivery-modify-confirm-ticket-list">
+                    <tr>
+                        <td colspan="10" style="padding: 0;margin:0;">
+                            <div style="max-height:300px;overflow:scroll;overflow-x:hidden;">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th width="6">编号</th>
+                                        <th width="20px">仓位</th>
+                                        <th width="50">商品编号</th>
+                                        <th>商品名称</th>
+                                        <th width="50">计量
+                                            <br>单位</th>
+                                        <th>原数量</th>
+                                        <th>改后数量</th>
+                                        <th>修改人备注</th>
+                                        <th width="100">入库数量</th>
+                                        <th width="150">入库确认人备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr ng-repeat="item in productItems track by $index">
+                                        <td>{{$index+1}}</td>
+                                        <td ng-bind-html="getPositions(item.positions)"></td>
+                                        <td>{{item.skuCode}}</td>
+                                        <td>{{item.productName}}</td>
+                                        <td>{{item.netUnit}}</td>
+                                        <td>{{item.refItemNum}}</td>
+                                        <td>{{item.refConfirmNum}}</td>
+                                        <td>{{item.creatorRecord}}</td>
+                                        <td><span class="origin-delta" ng-if="item.oldConfirmNum!=undefined">{{item.oldConfirmNum}}<br/></span>
+                                            <span class="btn-link" ng-click="stockDeltaWin(item,$index)">{{item.confirmNum>0? ("+"+item.confirmNum):item.confirmNum}}</span>
+                                        </td>
+                                        <td>
+                                            {{item.confirmRecord}}
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" href="javascript:;" ng-click="removePutSaleProduct($index,item)" ng-if="item.itemId==''"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            <div>确认入库时间:</div>
+                            <div class="update-date" ng-if="stockOrderInfoData.orderState==1">{{utilService.parseTimeByLong(stockOrderInfoData.updateTime,'yyyy-MM-dd hh:mm:ss')}}</div>
+                        </td>
+                        <td colspan="5" rowspan="2" style="height: 50px;">确认人签字:</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">确认人:<span ng-if="stockOrderInfoData.orderState==1">{{stockOrderInfoData.confirmName}}</span></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="modal-footer modal-footer-add">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-primary" ng-if="stockOrderInfoData.orderState == 0" ng-click="stockConfirmDetail()">确认入库</button>
+            <button class="btn btn-default btn-sm" ng-click="exportExcel(stockOrderInfoData)"><span class="glyphicon glyphicon-save"></span></button>
+        </div>
+    </script>
+    <!--退货确认单详情Modal-->
+    <script type="text/ng-template" id="modal-refund-confirm-ticket">
+        <div class="modal-header">
+            <button type="button" class="close close-xx" ng-click="cancel()"><span class="close-xxx" aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body form-inline">
+            <table class="table table-bordered table-refund-confirm-ticket">
+                <thead>
+                    <tr>
+                        <th colspan="7" class="ticket-title">好品退货入库确认单({{stockOrderInfoData.createTime| date: "yyyy-MM-dd" }})</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="company-name">客户名称:{{stockOrderInfoData.companyName}}</th>
+                        <th colspan="5" class="shelf-name">货架: {{stockOrderInfoData.shelfName}}</th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="company-addr">关联退货单:
+                            <button class="btn btn-link">退货单-{{stockOrderInfoData.companyName+'-'+stockOrderInfoData.shelfName+'('+utilService.parseTimeByLong(stockOrderInfoData.updateTime,'yyyyMMddhhmmss')+')'}}</button>
+                        </th>
+                        <th colspan="5" class="contact-tel"><span class="value-text">
+                            创建时间：{{stockOrderInfoData.createTime | date: "yyyy-MM-dd HH:mm:ss"}} <br/>
+                            更新时间：{{stockOrderInfoData.updateTime | date: "yyyy-MM-dd HH:mm:ss"}} <br/>
+                            配送操作人:{{stockOrderInfoData.creatorName}}</span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="7" class="modified-title">修改明细</th>
+                    </tr>
+                    <tr ng-if="stockOrderInfoData.orderState==0">
+                        <th colspan="7"><a href="javascript:;" ng-click="addProductWin()">+新增商品</a></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-refund-confirm-ticket-list">
+                    <tr>
+                        <td colspan="7" style="padding: 0;margin:0;">
+                            <div style="max-height:300px;overflow:scroll;overflow-x:hidden;">
+                                <table class="table table-bordered">
+                                    <tr>
+                                        <th>编号</th>
+                                        <th>仓位</th>
+                                        <th>商品编号</th>
+                                        <th>商品名称</th>
+                                        <th>计量单位</th>
+                                        <th>退货数量</th>
+                                        <th width="80">入库数量</th>
+                                        <th width="100">入库确认人
+                                            <br/>备注</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    <tr ng-repeat="item in productItems track by $index">
+                                        <td>{{$index+1}}</td>
+                                        <td ng-bind-html="getPositions(item.positions)"></td>
+                                        <td>{{item.skuCode}}</td>
+                                        <td>{{item.productName}}</td>
+                                        <td>{{item.netUnit}}</td>
+                                        <td>{{item.refConfirmNum}}</td>
+                                        <td><span class="origin-delta" ng-if="item.oldConfirmNum!=undefined">{{item.oldConfirmNum}}<br/></span>
+                                            <span class="btn-link" ng-click="stockDeltaWin(item,$index)">{{item.confirmNum>0? ("+"+item.confirmNum):item.confirmNum}}</span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                {{item.confirmRecord}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" href="javascript:;" ng-click="removePutSaleProduct($index,item)" ng-if="item.itemId==''"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7">
+                            <div>退货备注:</div>
+                            <div>{{stockOrderInfoData.remark}}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div>确认入库时间:</div>
+                            <div class="confirm-date" ng-if="stockOrderInfoData.orderState==1">{{utilService.parseTimeByLong(stockOrderInfoData.updateTime,'yyyy-MM-dd hh:mm:ss')}}</div>
+                        </td>
+                        <td colspan="4" rowspan="2" style="height: 50px;">确认人签字:</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">确认人:<span ng-if="stockOrderInfoData.orderState==1">{{stockOrderInfoData.confirmName}}</span></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="modal-footer modal-footer-add">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button class="btn btn-primary" ng-if="stockOrderInfoData.orderState == 0" ng-click="stockConfirmDetail()">确认入库</button>
+            <button class="btn btn-default btn-sm" ng-click="exportExcel(stockOrderInfoData)"><span class="glyphicon glyphicon-save"></span></button>
+        </div>
+    </script>
+    <!--新增商品Modal-->
+    <script type="text/ng-template" id="modalProductList">
+        <div class="modal-newproducts">
+            <div class="modal-header">
+                <button type="button" class="close close-xx" ng-click="cancel()"><span class="close-xxx" aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增商品</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <div class="header-wrap">
+                    <input type="text" class="form-control input-products-search" placeholder="根据商品名称查询" ng-keypress="keyPressSearchProduct($event,productQueryParams)" ng-model="productQueryParams.productName">
+                    <button class="btn btn-primary btn-search" ng-click="searchProduct(productQueryParams)">查询</button>
+                </div>
+                <table ng-table="newProdcutsTable" class="table table-bordered">
+                    <thead>
+                        <th>选择</th>
+                        <th>商品编号</th>
+                        <th>仓位</th>
+                        <th>商品名称</th>
+                        <th>商品重量</th>
+                        <th>计量单位</th>
+                        <th>售价</th>
+                        <th>保质期</th>
+                        <th>
+                            <drop-down select="selectCategoryCallback(item)" desc-field="categoryName" default-desc="全部品类" default-item={{curCateotyList}} btn-style="btn-link" list={{categoryList}}></drop-down>
+                        </th>
+                        <th>
+                            <drop-down select="profitSelectCallback(item)" desc-field="name" default-desc="全部利润等级" default-item={{curProfitLevelData}} btn-style="btn-link" list={{profitLevelData}}></drop-down>
+                        </th>
+                        <th>销量</th>
+                        <th>库存</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="product in $data">
+                            <td>
+                                <input type="checkbox" ng-model="product.select" ng-if="product.isAddSelect!='isAddSelect'" ng-click="chkboxChange(product,$event)">
+                            </td>
+                            <td>{{product.skuCode}}</td>
+                            <td ng-bind-html="getPositions(product.positions)"></td>
+                            <td>{{product.productName}}</td>
+                            <td>{{product.net}}</td>
+                            <td>{{product.netUnit}}</td>
+                            <td>{{product.price/100.0}}元</td>
+                            <td>{{product.expiryDate}}</td>
+                            <td>{{product.category.categoryName}}</td>
+                            <td>{{profitLevel.DESC[product.profitLevel]}}</td>
+                            <td>{{product.sales}}</td>
+                            <td>{{product.stock}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="confirmPutSale()">确定</button>
+            </div>
+        </div>
+    </script>
+    <!--修改真实库存-->
+    <script type="text/ng-template" id="modal-modifystock">
+        <div class="modal-header">
+            <button type="button" class="close close-xx" ng-click="cancel()"><span class="close-xxx" aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">修改库存</h4>
+        </div>
+        <form ng-submit="stockDeltaWinConfirm(stockQueryParams)">
+            <div class="modal-body">
+                <div>
+                    <input name="modify-type" modify-type="0" type="radio" ng-model="stockQueryParams.mode" value="add" /> 加库存
+                    <span ng-if="stockOrderInfoData.orderType==1">
+                    <input name="modify-type" modify-type="1" type="radio" ng-model="stockQueryParams.mode" value="minus" /> 减库存
+                    </span>
+                    <label class="change-num-text"></label>
+                </div>
+                <input class="form-control modify-num" type="number" ng-model="stockQueryParams.number" placeholder="请输入库存数" min=0 required required-input/>
+                <div style="overflow: hidden;">
+                    <label class="category-label" style="float:left;line-height: 48px;margin-right:2px;">原因: </label>
+                    <div isteven-multi-select input-model="errorTypeData" output-model="stockQueryParams.typeOutPutData" button-label="name" item-label="markId name" selection-mode="single" tick-property="selected" helper-elements="" max-height="200px" translation="localLang" on-item-click="errorTypeSelect(data)" style="margin:5px 0;width: 100px;float:left;">
+                    </div>
+                </div>
+                <input class="form-control modify-note" type="text" ng-if="errorTypeSelectMarkId == 'I'" ng-model="stockQueryParams.confirmRecord" placeholder="请输入修改备注" required required-input />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary btn-ensure">确定</button>
+            </div>
+        </form>
+    </script>
+</div>

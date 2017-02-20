@@ -1,0 +1,57 @@
+.position-manage {
+    .header-view {
+        button {
+            //float: right;
+            //margin-bottom: 16px;
+        }
+    }
+    .table-position {}
+    .modal-position-edit {
+        .form-inline {
+            &>div {
+                margin-top: 16px;
+                .line-title {
+                    display: inline-block;
+                    width: 40px;
+                    line-height: 32px;
+                    float: left;
+                }
+                .line-value{
+                	margin-left: 40px;
+                }
+                .line-tip{
+                	display: inline-block;
+                	color: #555555;
+                }
+            }
+        }
+    }
+    .table-position {
+        margin-bottom: 0;
+    }
+    table {
+        table-layout: fixed;
+        word-break: break-all;
+        text-align: center;
+    }
+    div.ng-table-pager.ng-scope {
+        position: absolute;
+        bottom: 0;
+    }
+    .one-table {
+        overflow: scroll;
+        overflow-x: hidden;
+        tbody {
+            display: none;
+        }
+    }
+    .two-table {
+        width: 100%;
+        height: 750px;
+        overflow: scroll;
+        text-align: center;
+        thead {
+            display: none;
+        }
+    }
+}

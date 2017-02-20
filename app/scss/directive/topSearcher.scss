@@ -1,0 +1,28 @@
+.top-searcher {
+    padding-left: 32px;
+    padding-top: 16px;
+    padding-right: 32px;
+    padding-bottom: 16px;
+    padding-left: 0;
+    padding-right: 0;
+    float: left;
+    .input-company-search {
+        width: 300px;
+        float: left;
+    }
+    .time-select {
+        display: inline;
+        .input-starttime {
+            width: 140px;
+            margin-left: 32px;
+            margin-right: 16px;
+        }
+        .input-endtime {
+            width: 140px;
+            margin-left: 16px;
+        }
+    }
+    .btn-search{
+        margin-left: 16px;
+    }
+}

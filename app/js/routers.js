@@ -1,0 +1,146 @@
+module.exports = [{
+  name: 'home',
+  path: 'home',
+  templateUrl: 'home/home.html'
+}, {
+  name: 'company',
+  path: 'company',
+  templateUrl: 'company/company.html'
+}, {
+  name: 'shelf',
+  path: 'shelf',
+  templateUrl: 'shelf/shelfPatrol.html'
+}, {
+  name: 'shelfManage',
+  path: 'shelfManage',
+  templateUrl: 'shelfmanage/shelfManage.html'
+}, {
+  name: 'order',
+  path: 'order',
+  templateUrl: 'order/order.html'
+}, {
+  name: 'pickOrder',
+  path: 'pickOrder',
+  templateUrl: 'pickOrder/pickOrder.html'
+}, {
+  name: 'goodsChooseOrder',
+  path: 'goodsChooseOrder',
+  templateUrl: 'goodsChooseOrder/goodsChooseOrder.html'
+}, {
+  name: 'goodsChooseHistory',
+  path: 'goodsChooseHistory',
+  templateUrl: 'goodsChooseOrder/goodsChooseHistory.html'
+}, {
+  name: 'deliveryEdit',
+  path: 'deliveryEdit/:orderId',
+  templateUrl: 'pickOrder/deliveryEdit.html'
+}, {
+  name: 'deliveryEdit2',
+  path: 'deliveryEdit/:orderId/:goodsChooseOrderId',
+  templateUrl: 'pickOrder/deliveryEdit.html'
+}, {
+  name: 'account',
+  path: 'account',
+  templateUrl: 'account/account.html'
+}, {
+  name: 'role',
+  path: 'role',
+  templateUrl: 'account/role.html',
+  controller: 'RoleCtrl'
+}, {
+  name: 'inStorage',
+  path: 'inStorage',
+  templateUrl: 'inStorage/inStorage.html'
+}, {
+  name: 'product',
+  path: 'product',
+  templateUrl: 'product/product.html'
+}, {
+  name: 'salesStatistics',
+  path: 'salesStatistics',
+  templateUrl: 'dataStatistics/salesStatistics.html'
+}, {
+  name: 'promotionProduct',
+  path: 'promotionProduct',
+  templateUrl: 'promotion/promotionProduct.html'
+}, {
+  name: 'promotionSuite',
+  path: 'promotionSuite',
+  templateUrl: 'promotion/promotionSuite.html'
+}, {
+  name: 'shelfdetail',
+  path: 'shelf/:companyId',
+  templateUrl: 'shelf/shelfDetail.html'
+}, {
+  name: 'information',
+  path: 'information',
+  templateUrl: 'information/information.html'
+}, {
+  name: 'labelsManagement',
+  path: 'labelsManagement',
+  templateUrl: 'labelsManagement/labelsManagement.html'
+}, {
+  name: 'welfare',
+  path: 'welfare',
+  templateUrl: 'welfare/welfare.html'
+}, {
+  name: 'positionManage',
+  path: 'positionManage',
+  templateUrl: 'positionManage/positionManage.html'
+}, {
+  name: 'finance',
+  path: 'finance',
+  templateUrl: 'finance/finance.html'
+}, {
+  name: 'configurationInformation',
+  path: 'configurationInformation',
+  templateUrl: 'configurationInformation/configurationInformation.html'
+}, {
+  name: 'holidayWelfare',
+  path: 'holidayWelfare',
+  templateUrl: 'holidayWelfare/holidayWelfare.html'
+}, {
+  name: 'teaInformation',
+  path: 'teaInformation',
+  templateUrl: 'teaInformation/teaInformation.html'
+}, {
+  name: 'promotionOrder',
+  path: 'promotionOrder',
+  templateUrl: 'promotion/promotionOrder.html'
+}, {
+  name: 'issueDynamic',
+  path: 'issueDynamic',
+  templateUrl: 'suite/issueDynamic.html'
+}, {
+  name: 'suiteDistributionDynamic',
+  path: 'suiteDistributionDynamic',
+  templateUrl: 'suite/suiteDistributionDynamic.html'
+}, {
+  name: 'suiteCfgManage',
+  path: 'suiteCfgManage',
+  templateUrl: 'suite/suiteCfgManage.html'
+}, {
+  name: 'commentsManage',
+  path: 'commentsManage',
+  templateUrl: 'suite/commentsManage.html'
+}, {
+  name: 'template',
+  path: 'template',
+  templateUrl: 'template/template.html'
+}, {
+  name: 'templateEdit',
+  path: 'templateEdit',
+  templateUrl: 'template/templateEdit.html'
+}, {
+  name: 'templateEdit',
+  path: 'templateEdit/:templateId',
+  templateUrl: 'template/templateEdit.html'
+}, {
+  name: 'deadStock',
+  path: 'deadStock',
+  templateUrl: 'deadStock/deadStock.html'
+}, {
+  name: 'newProductRecommend',
+  path: 'newProductRecommend',
+  templateUrl: 'product/newProductRecommend.html'
+}];

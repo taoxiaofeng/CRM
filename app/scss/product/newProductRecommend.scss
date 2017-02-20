@@ -1,0 +1,141 @@
+.product {
+  .header-view {
+    padding-bottom: 46px;
+    .input-group {
+      float: left;
+    }
+    .btn-search {
+      margin-left: 8px;
+    }
+    .btn-addproduct,
+    .btn-addtocategory,
+    .btn-managecategory,
+    .btn-export-excel,
+    .btn-add-newProduct{
+      float: right;
+    }
+    .btn-addtocategory {
+      margin-right: 50px;
+    }
+    .btn-add-newProduct{
+      margin-right: 8px;
+    }
+  }
+
+  .last-update-time {
+    margin-bottom: 15px;
+  }
+
+  .require-tip {
+    color: red;
+  }
+  .first-line,
+  .second-line,
+  .third-line {
+    overflow: hidden;
+  }
+  .product-from-ul {
+    list-style-type: none;
+    &>li {
+      margin-bottom: 8px;
+    }
+    .product-label {
+      width: 80px;
+    }
+    .category-label {
+      float: left;
+      line-height: 38px;
+    }
+    .clear-both {
+      clear: both;
+    }
+    input[type="text"] {
+      width: 160px;
+    }
+    .input-price {
+      width: 140px;
+    }
+  }
+  .chk_1 {
+    display: none;
+  }
+  .chk_1 + label {
+    background-color: #FFF;
+    border: 1px solid #C1CACA;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    padding: 9px;
+    border-radius: 5px;
+    display: inline-block;
+    position: relative;
+    margin-right: 30px;
+  }
+  .chk_1 + label:active {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .chk_1:checked + label {
+    background-color: #ECF2F7;
+    border: 1px solid #92A1AC;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+    color: #243441;
+  }
+  .chk_1:checked + label:after {
+    content: '\2714'; //勾选符号
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    color: #758794;
+    width: 100%;
+    text-align: center;
+    font-size: 1em;
+    padding: 1px 0 0 0;
+    vertical-align: text-top;
+  }
+  .modal-category-manage {
+    min-height: 150px;
+    .existing-categories {
+      font-size: 12px;
+      margin-top: 16px;
+      .level-one-wrap {
+        width: 100px;
+        display: inline-block;
+        height: 450px;
+        overflow-y: scroll;
+        .list-group-item.active {
+          color: #333;
+          background-color: #D2D4D2;
+          border-color: #D2D4D2;
+        }
+      }
+      .level-two-wrap {
+        border-top: $SpitLine;
+        padding-top: 8px;
+        float: right;
+        width: 458px;
+        height: 450px;
+        overflow-y: scroll;
+        li {
+          list-style-type: none;
+          margin-top: 8px;
+          .level-two-edit {
+            display: inline-block;
+            input {
+              width: 95px;
+              font-size: 12px;
+            }
+          }
+          .level-two-edit:nth-child(2) {
+            margin-left: 16px;
+          }
+        }
+      }
+    }
+  }
+  .modal-level-one-category-edit {
+    li {
+      margin-top: 8px;
+      input {
+        width: 170px;
+      }
+    }
+  }
+}

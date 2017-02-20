@@ -1,0 +1,63 @@
+.promotion-suite {
+    .header-view {
+        padding-bottom: 46px;
+        .input-group {
+            float: left;
+        }
+        .btn-addsuite {
+            float: right;
+        }
+    }
+    .suite-edit-modal {
+        .modal-body {
+            .warn-tip {
+                color: red;
+            }
+            &>div {
+                margin-bottom: 12px;
+            }
+            .input-title {
+                width: 600px;
+            }
+            .uploader-wrap {
+                margin-left: 16px;
+                img {
+                    width: 50px;
+                    height: 50px;
+                    float: left;
+                    margin-right: 12px;
+                }
+            }
+            .product-select-wrap {
+                margin-left: 16px;
+                @include display-flex;
+                .list-group {
+                    width: 300px;
+                    height: 400px;
+                    overflow: auto;
+                    border: 1px solid #d8d8d8;
+                    .color-blue {
+                        color: blue;
+                    }
+                }
+                .operate-buttons {
+                    margin-left: 12px;
+                    margin-right: 12px;
+                    @include display-flex;
+                    @include prefixer(flex-direction, column, webkit moz o ms spec);
+                    @include prefixer(justify-content, space-around, webkit moz o ms spec);
+                }
+            }
+        }
+    }
+    .link-modal {
+        .wechat-link {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .internal-link {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    }
+}

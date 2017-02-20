@@ -1,0 +1,182 @@
+<div ng-controller="orderCtrl" class="order-center container-fluid">
+    <div class="header-wrap col-md-12">
+        <top-searcher search="searchOrders(queryParams)"></top-searcher>
+        <div class="btn-wrap">
+            <button class="btn  btn-primary  search-btn" ng-click="bathMultiPrint()">批量打印</button>
+        </div>
+    </div>
+    <!--     <drop-down btn-style="btn btn-default dropdown-toggle querytype-btn" list={{isUpdateTimeChoices}} default-item="{{isUpdateTimeChoices[0]}}" ng-model="queryParams.isUpdateTime" select="selectIsUpadate(item)" prevent-auto-selected="true">
+    </drop-down> -->
+    <!--<div id="scrollable-area">-->
+    <!--<div ui-grid="gridOptions" class="grid" ui-grid-resize-columns ui-grid-move-columns>-->
+    <!--fixed-table-headers="scrollable-area"-->
+<!--     <div class="one-table">
+        <table ng-table="orderTable" class="table table-condensed table-bordered ngtable table-orders-center">
+            <thead>
+                <th>序号</th>
+                <th>
+                    <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1" ng-click="selectAllOrder($event,$data)" />
+                    <label for="checkbox_all"></label>
+                </th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>客户名称</th>
+                <th>货架名称</th>
+                <th>
+                    <drop-down list={{orderTypeList}} desc-field='desc' default-item={{curOrderType}} btn-style="btn-link" select="selectOrderType(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{invoiceNeedStateList}} desc-field='desc' prevent-auto-selected="true" default-item={{invoiceNeedStateList[0]}} btn-style="btn-link" select="selectInvoicenNeedState(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{isPaidList}} desc-field='desc' prevent-auto-selected="true" default-item={{isPaidList[0]}} btn-style="btn-link" select="selectIsPaid(item)"></drop-down>
+                </th>
+                <th>状态</th>
+                <th>查看明细</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in $data">
+                    <td>{{order.index}}</td>
+                    <td>
+                        <input type="checkbox" ng-model="order.checked" id="{{'checkbox_'+order.orderId}}" class="chk_1" ng-click="updateSelection($event,order)" />
+                        <label for="{{'checkbox_'+order.orderId}}"></label>
+                    </td>
+                    <td>{{utilService.parseTimeByLong(order.createTime)}}</td>
+                    <td>{{utilService.parseTimeByLong(order.updateTime)}}</td>
+                    <td>{{order.companyName}}</td>
+                    <td>{{order.shelfName}}</td>
+                    <td>{{ORDER_TYPE.DESC[order.orderType]}}</td>
+                    <td>
+                        {{order.orderType==ORDER_TYPE.SETTLEMENT&&order.orderState!=SETTLEMENT_STATE.IN_INVENTORY?(order.isInvoice!=='0'?'需要':'不需要'):'-'}}
+                    </td>
+                    <th>{{order.orderType==ORDER_TYPE.SETTLEMENT?(order.isPaid==0?'未付款':'已付款'):'-'}}</th>
+                    <td>{{getOrderStateDesc(order.orderType,order.orderState)}}</td>
+                    <td>
+                        <button class="btn btn-default btn-sm" ng-click="checkOrderDetail(order.orderType,order.orderId)">
+                            <span class="glyphicon glyphicon-list-alt"></span></button>
+                    </td>
+                    <td data-title="'导出Excel'">
+                        <button class="btn btn-default btn-sm" ng-click="exportExcelOnList(order.orderType,order.orderId,$event)"><span class="glyphicon glyphicon-save"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="printOrder(order)">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+        <table ng-table="orderTable" class="table table-condensed table-bordered ngtable table-orders-center">
+            <thead>
+                <th>序号</th>
+                <th>
+                    <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1" ng-click="selectAllOrder($event,$data)" />
+                    <label for="checkbox_all"></label>
+                </th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>客户名称</th>
+                <th>货架名称</th>
+                <th>
+                    <drop-down list={{orderTypeList}} desc-field='desc' default-item={{curOrderType}} btn-style="btn-link" select="selectOrderType(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{invoiceNeedStateList}} desc-field='desc' prevent-auto-selected="true" default-item={{invoiceNeedStateList[0]}} btn-style="btn-link" select="selectInvoicenNeedState(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{isPaidList}} desc-field='desc' prevent-auto-selected="true" default-item={{isPaidList[0]}} btn-style="btn-link" select="selectIsPaid(item)"></drop-down>
+                </th>
+                <th>状态</th>
+                <th>查看明细</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in $data">
+                    <td>{{order.index}}</td>
+                    <td>
+                        <input type="checkbox" ng-model="order.checked" id="{{'checkbox_'+order.orderId}}" class="chk_1" ng-click="updateSelection($event,order)" />
+                        <label for="{{'checkbox_'+order.orderId}}"></label>
+                    </td>
+                    <td>{{utilService.parseTimeByLong(order.createTime)}}</td>
+                    <td>{{utilService.parseTimeByLong(order.updateTime)}}</td>
+                    <td>{{order.companyName}}</td>
+                    <td>{{order.shelfName}}</td>
+                    <td>{{ORDER_TYPE.DESC[order.orderType]}}</td>
+                    <td>
+                        {{order.orderType==ORDER_TYPE.SETTLEMENT&&order.orderState!=SETTLEMENT_STATE.IN_INVENTORY?(order.isInvoice!=='0'?'需要':'不需要'):'-'}}
+                    </td>
+                    <th>{{order.orderType==ORDER_TYPE.SETTLEMENT?(order.isPaid==0?'未付款':'已付款'):'-'}}</th>
+                    <td>{{getOrderStateDesc(order.orderType,order.orderState)}}</td>
+                    <td>
+                        <button class="btn btn-default btn-sm" ng-click="checkOrderDetail(order.orderType,order.orderId)">
+                            <span class="glyphicon glyphicon-list-alt"></span></button>
+                    </td>
+                    <td data-title="'导出Excel'">
+                        <button class="btn btn-default btn-sm" ng-click="exportExcelOnList(order.orderType,order.orderId,$event)"><span class="glyphicon glyphicon-save"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="printOrder(order)">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <!--fixed-table-headers="scrollable-area"-->
+<!--     <div class="two-table">
+        <table ng-table="orderTable" class="table table-condensed table-bordered ngtable table-orders">
+            <thead>
+                <th>序号</th>
+                <th>
+                    <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1" ng-click="selectAllOrder($event,$data)" />
+                    <label for="checkbox_all"></label>
+                </th>
+                <th>创建时间</th>
+                <th>更新时间</th>
+                <th>客户名称</th>
+                <th>货架名称</th>
+                <th>
+                    <drop-down list={{orderTypeList}} desc-field='desc' default-item={{curOrderType}} btn-style="btn-link" select="selectOrderType(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{invoiceNeedStateList}} desc-field='desc' prevent-auto-selected="true" default-item={{invoiceNeedStateList[0]}} btn-style="btn-link" select="selectInvoicenNeedState(item)"></drop-down>
+                </th>
+                <th>
+                    <drop-down list={{isPaidList}} desc-field='desc' prevent-auto-selected="true" default-item={{isPaidList[0]}} btn-style="btn-link" select="selectIsPaid(item)"></drop-down>
+                </th>
+                <th>状态</th>
+                <th>查看明细</th>
+                <th>操作</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="order in $data">
+                    <td>{{order.index}}</td>
+                    <td>
+                        <input type="checkbox" ng-model="order.checked" id="{{'checkbox_'+order.orderId}}" class="chk_1" ng-click="updateSelection($event,order)" />
+                        <label for="{{'checkbox_'+order.orderId}}"></label>
+                    </td>
+                    <td>{{utilService.parseTimeByLong(order.createTime)}}</td>
+                    <td>{{utilService.parseTimeByLong(order.updateTime)}}</td>
+                    <td>{{order.companyName}}</td>
+                    <td>{{order.shelfName}}</td>
+                    <td>{{ORDER_TYPE.DESC[order.orderType]}}</td>
+                    <td>
+                        {{order.orderType==ORDER_TYPE.SETTLEMENT&&order.orderState!=SETTLEMENT_STATE.IN_INVENTORY?(order.isInvoice!=='0'?'需要':'不需要'):'-'}}
+                    </td>
+                    <th>{{order.orderType==ORDER_TYPE.SETTLEMENT?(order.isPaid==0?'未付款':'已付款'):'-'}}</th>
+                    <td>{{getOrderStateDesc(order.orderType,order.orderState)}}</td>
+                    <td>
+                        <button class="btn btn-default btn-sm" ng-click="checkOrderDetail(order.orderType,order.orderId)">
+                            <span class="glyphicon glyphicon-list-alt"></span></button>
+                    </td>
+                    <td data-title="'导出Excel'">
+                        <button class="btn btn-default btn-sm" ng-click="exportExcelOnList(order.orderType,order.orderId,$event)"><span class="glyphicon glyphicon-save"></span></button>
+                        <button class="btn btn-default btn-sm" ng-click="printOrder(order)">
+                            <span class="glyphicon glyphicon-print"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>  -->    
+    <!--</div>-->
+    <div id="exportExcelWrap" class="hidden"></div>
+</div>

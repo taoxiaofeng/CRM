@@ -1,0 +1,97 @@
+.labelsManagement {
+  .btn-query {
+  }
+  .tag-name{
+    margin: 0;
+  }
+  .btn-addTags {
+    position: relative;
+    left: 45%;
+  }
+  .btn-manageTags {
+    position: relative;
+    left: 55%;
+  }
+  .close-xx {
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    color: red;
+  }
+  .add-tags,
+  .tagsTypeOne,
+  .note-one {
+    font-size: 20px;
+  }
+  .input-name,
+  .note-name {
+    width: 80%;
+    position: relative;
+    top: -35px;
+    left: 18%;
+  }
+  .form-error {
+    position: relative;
+    top: -31px;
+    left: 18%;
+  }
+  .note-one,
+  .note-name {
+    width: 80%;
+    height: 30%;
+  }
+  .tagsType-btn {
+    position: relative;
+    left: 40%;
+  }
+  ._addTagsType {
+    width: 70%;
+  }
+  .addTagsType {
+    position: relative;
+    top: -34.5px;
+    left: 70%;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+  }
+  .form-error-two {
+    position: absolute;
+    top: 50px;
+    left: 12px;
+  }
+  .btn-save,
+  .btn-edit {
+    position: absolute;
+    top: 10px;
+    left: 70%;
+    //margin-left: 8px;
+  }
+  input {
+    width: 70%;
+  }
+  .btn-xx {
+    width: 40px;
+    height: 34px;
+    position: absolute;
+    top: 10px;
+    left: 78%;
+  }
+  .btn-tType {
+    margin: 0;
+    padding: 0 0 0 15px;
+    .querytype-btn {
+      width: 160px;
+    }
+  }
+  .table-sp {
+    margin-top: 15px;
+  }
+  .newTagsType {
+    width:100%;
+    height: 300px;
+    overflow: scroll;
+    .tags-list {
+    }
+  }
+}

@@ -1,0 +1,248 @@
+/* fallback */
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.icon {
+    font-size: 18px;
+    line-height: 18px;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: -webkit-baseline-middle;
+    font-family: 'iconfont';
+    color: $white-color;
+}
+
+.icon-backburger:before {
+    @extend .icon;
+    content: "\e654";
+    vertical-align: baseline;
+}
+
+.icon-arrow:before {
+    @extend .icon;
+    content: "\e717";
+    vertical-align: baseline;
+}
+
+.icon-login {
+    @extend .icon;
+    background-image: url('../img/login.png');
+}
+
+.icon-compress {
+    @extend .icon;
+    background-image: url('../img/icon-compress.png');
+}
+
+.icon-expand {
+    @extend .icon;
+    background-image: url('../img/icon-expand.png');
+}
+
+.icon-exit {
+    @extend .icon;
+    background-image: url('../img/exit.png');
+}
+
+.icon-plus {
+    @extend .icon;
+    background-image: url('../img/plus.png');
+}
+
+.icon-delete {
+    @extend .icon;
+    background-image: url('../img/delete.png');
+}
+
+.icon-company {
+    @extend .icon;
+    background-image: url('../img/icon-company.png');
+}
+
+.icon-category {
+    @extend .icon;
+    background-image: url('../img/category.png');
+}
+
+.icon-product {
+    @extend .icon;
+    background-image: url('../img/icon-product.png');
+}
+
+.icon-promotion {
+    @extend .icon;
+    background-image: url('../img/icon-promotion.png');
+}
+
+.icon-labelsManagement {
+    @extend .icon;
+    background-image: url('../img/labelsManagement.png');
+}
+
+.icon-partrol {
+    @extend .icon;
+    background-image: url('../img/partrol.png');
+}
+
+.icon-goodschoose {
+    @extend .icon;
+    background-image: url('../img/icon-goodschoose.png');
+}
+
+.icon-goodschoose-red {
+    @extend .icon;
+    background-image: url('../img/icon-goodschoose-red.png');
+}
+
+.icon-pick {
+    @extend .icon;
+    background-image: url('../img/pick.png');
+}
+
+.icon-account {
+    @extend .icon;
+    background-image: url('../img/icon-account.png');
+}
+
+.icon-order {
+    @extend .icon;
+    background-image: url('../img/order.png');
+}
+
+.icon-storage {
+    @extend .icon;
+    background-image: url('../img/storage.png');
+}
+
+.icon-information {
+    @extend .icon;
+    background-image: url('../img/information.png');
+}
+
+.icon-welfare {
+    @extend .icon;
+    background-image: url('../img/welfare.png');
+}
+
+.icon-position {
+    @extend .icon;
+    background-image: url('../img/position.png');
+}
+
+.icon-finance {
+    @extend .icon;
+    background-image: url('../img/finance.png');
+}
+
+.icon-clock {
+    @extend .icon;
+    background-image: url('../img/clock.png');
+}
+
+.icon-configurationInformation {
+    @extend .icon;
+    background-image: url('../img/configurationInformation.png');
+}
+
+.icon-holidayWelfare {
+    @extend .icon;
+    background-image: url('../img/holidayWelfare.png');
+}
+
+.icon-teaInformation {
+    @extend .icon;
+    background-image: url('../img/tea.png');
+}
+
+.icon-promotionOrder {
+    @extend .icon;
+    background-image: url('../img/promationOrder.png');
+}
+
+.icon-required {
+    color: red;
+}
+
+.icon-issueDynamic {
+    @extend .icon;
+    background-image: url('../img/icon-issueDynamic.png');
+}
+
+.icon-suiteDistributionDynamic {
+    @extend .icon;
+    background-image: url('../img/icon-suiteDistributionDynamic.png');
+}
+
+.icon-suiteCfgManage {
+    @extend .icon;
+    background-image: url('../img/icon-suiteCfgManage.png');
+}
+
+.icon-commentsManage {
+    @extend .icon;
+    background-image: url('../img/icon-commentsManage.png');
+}
+
+.icon-like {
+    @extend .icon;
+    background-image: url('../img/icon-like.png');
+}
+
+.icon-shelf {
+    @extend .icon;
+    background-image: url('../img/icon-shelf.png');
+}
+
+.icon-business-process {
+    @extend .icon;
+    background-image: url('../img/icon-business-process.png');
+}
+
+.icon-enterprise-service {
+    @extend .icon;
+    background-image: url('../img/icon-enterprise-service.png');
+}
+
+.icon-value-added {
+    @extend .icon;
+    background-image: url('../img/icon-value-added.png');
+}
+
+.icon-B-client {
+    @extend .icon;
+    background-image: url('../img/icon-B-client.png');
+}
+
+.icon-C-client {
+    @extend .icon;
+    background-image: url('../img/icon-C-client.png');
+}
+
+.icon-data {
+    @extend .icon;
+    background-image: url('../img/icon-data.png');
+}
+
+.icon-template {
+    @extend .icon;
+    background-image: url('../img/icon-template.png');
+}

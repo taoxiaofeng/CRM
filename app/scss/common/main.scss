@@ -1,0 +1,223 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0 !important;
+    outline:none;
+}
+
+html,
+body {
+    position: relative;
+    height: 100%;
+    min-height: 100%;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+}
+
+body {
+    @include display-flex;
+    #container {
+        position: relative;
+        max-height: 100%;
+        float: left;
+        @include prefixer(flex, 1, webkit moz o spec);
+        overflow: scroll;
+        #head {
+            position: fixed;
+            height: 60px;
+            width: 100%;
+            background-color: #2d323e;
+            z-index: 1000;
+            .logo {
+                float: left;
+            }
+            .header-title {
+                float: left;
+                margin-left: 10px;
+                height: 60px;
+                line-height: 60px;
+                font-size: 20px;
+                color: #FFFFFF;
+            }
+            .logout-btn {
+                float: right;
+                margin-right: 10px;
+                height: 60px;
+                line-height: 60px;
+                background-color: #333333;
+                border: none;
+                color: #FFFFFF;
+                font-size: 20px;
+            }
+        }
+        .md-panel-outer-wrapper {
+            position: fixed;
+        }
+        .toast-container {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10000;
+        }
+        .loadding-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1060;
+            md-progress-circular {
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+            }
+        }
+        #view {
+            position: absolute;
+            padding-top: 10px;
+            width: 100%;
+            height: 100%;
+            min-height: 100%;
+            &>div {
+                /*                display: flex;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: box;
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                height: 100%;
+                flex-direction: column;
+                -moz-flex-direction: column;
+                -webkit-flex-direction: column;
+                box-orient: vertical;
+                -webkit-box-orient: vertical;
+                -moz-box-orient: vertical;
+                -ms-flex-direction: column;*/
+                .ng-table {
+                    tfoot {
+                        h5 {
+                            text-align: center;
+                            color: #888;
+                        }
+                    }
+                }
+            }
+            .ng-table,.ngtable {
+                th {
+                    vertical-align: middle;
+                }
+                .operation-cell {
+                    @include display-flex;
+                    &>button {
+                        margin-left: 5px;
+                    }
+                    &>button:first-of-type {
+                        margin-left: 0;
+                    }
+                }
+            }
+            .chk_1 {
+                display: none;
+            }
+            .chk_1 + label {
+                background-color: #FFF;
+                border: 1px solid #C1CACA;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+                padding: 9px;
+                border-radius: 5px;
+                display: inline-block;
+                position: relative;
+                margin-bottom: 0;
+                vertical-align: -webkit-baseline-middle;
+            }
+            .chk_1 + label:active {
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+            }
+            .chk_1:checked + label {
+                background-color: #ECF2F7;
+                border: 1px solid #92A1AC;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1);
+                color: #243441;
+            }
+            .chk_1:checked + label:after {
+                content: '\2714'; //勾选符号 
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                color: #758794;
+                width: 100%;
+                text-align: center;
+                font-size: 1em;
+                padding: 1px 0 0 0;
+                vertical-align: text-top;
+            }
+            .no-data {
+                text-align: center;
+                color: #888;
+            }
+        }
+    }
+    &.folded {
+        #container {
+            margin-left: $sidebarFoldedWidth;
+        }
+    }
+    /*重写样式*/
+    .modal-header {
+        position: relative;
+        padding: 10px;
+        .close {
+            margin: 0;
+        }
+        .close-btn {
+            @include display-flex;
+            @include flex-align-center;
+            @include prefixer(align-items, center, webkit moz o spec);
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+    }
+    .modal-body {
+        padding: 10px;
+    }
+    .md-dialog-container {
+        z-index: 10002;
+    }
+    md-backdrop._md-select-backdrop {
+        z-index: 10003;
+    }
+    ._md-select-menu-container {
+        z-index: 10004;
+    }
+}
+
+@media only screen and (max-width: $layout-breakpoint-xs) {
+    body {
+        .sidebar {
+            display: none;
+        }
+        &.folded {
+            #container {
+                margin-left: 0;
+            }
+        }
+        .table-mini {
+            box-shadow: 0 0;
+        }
+    }
+}
+
+.modal {
+    overflow-x: hidden;
+    overflow-y: auto;
+}

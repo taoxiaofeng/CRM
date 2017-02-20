@@ -1,0 +1,64 @@
+<md-dialog ng-cloak flex="55">
+    <div class="modal-header">
+        <h3 class="modal-title">{{editMode ? "编辑账户" : "新建账户"}}</h3>
+    </div>
+    <md-dialog-content layout-padding>
+        <form name="accountForm">
+            <md-input-container>
+                <label>用户名</label>
+                <input required name="name" ng-model="account.name">
+                <div ng-messages="accountForm.name.$error">
+                    <div ng-message="required">用户名不能为空.</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>手机号</label>
+                <input required name="phone" ng-model="account.mobile" ng-readonly="editMode" maxlength="11" ng-pattern="/(^(13\d|15[^4\D]|17[13678]|18\d)\d{8}|170[^346\D]\d{7})$/">
+                <div ng-messages="accountForm.phone.$error">
+                    <div ng-message="pattern">请输入正确的手机号码.</div>
+                    <div ng-message="required">手机号不能为空.</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>{{editMode ? "修改密码" : "密码"}}</label>
+                <input ng-required="!editMode" name="password" ng-model="account.password">
+                <div ng-messages="accountForm.password.$error">
+                    <div ng-message="required">密码不能为空.</div>
+                </div>
+            </md-input-container>
+            <div layout="row">
+                <md-input-container style="margin:0px;">
+                    <label>创建者</label>
+                    <input readonly ng-model="creatorName">
+                </md-input-container>
+                <md-input-container style="margin:0px;" ng-show="false">
+                    <label>用户等级</label>
+                    <input readonly>
+                </md-input-container>
+                <md-input-container style="margin:0px;">
+                    <label>管理者</label>
+                    <md-select style="width:150px;" ng-model="pickedSupervisor" ng-model-options="{trackBy: '$value.managerId'}">
+                        <md-option ng-repeat="supervisor in supervisors" ng-value="supervisor" ng-selected="supervisor.managerId === pickedSupervisor.managerId">{{supervisor.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <div style="margin:8px;margin-top:-32px;display: table;clear: both;">
+                    <img style="width:42px;margin-bottom:8px;" src="{{account.avatar?picUrl+account.avatar:'./img/noimage.png'}}" />
+                    <uploader index="1" value="account.avatar" ng-model="account.avatar" upload-title="上传头像" hide-input=true did-upload="didUploadImg(file,1)">
+                    </uploader>
+                </div>
+            </div>
+            <div layout="row">
+                <md-chips ng-model="checkedRoles" readonly="true" style="min-width:100px;">
+                    <md-chip-template>{{$chip.name}}</md-chip-template>
+                </md-chips>
+                <md-button class="md-primary md-raised" ng-click="pickRole()">选取角色</md-button>
+            </div>
+        </form>
+        <permissions all="allPermissions" checked="account.permissionIds"></permissions>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">取消</md-button>
+        <md-button class="md-primary" ng-click="ok()" ng-disabled="accountForm.$invalid">确定</md-button>
+    </md-dialog-actions>
+</md-dialog>

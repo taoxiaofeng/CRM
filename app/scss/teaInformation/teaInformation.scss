@@ -1,0 +1,118 @@
+.promotion,.tea {
+    .input-group{display: inline;float: left;}
+    .header-wrap {
+        .btn-create-delivery {
+            float: right;
+            margin-top: 16px;
+            margin-right: 32px;
+        }
+        .btn-wrap {
+            float: right;
+            display: inline-block;
+            padding-bottom: 16px;
+            padding-top: 16px;
+        }
+    }
+    .table-orders {
+        th {
+            text-align: left;
+        }
+    }
+    .modal-delivery-order {
+        .table-delivery-order {
+            thead tr:nth-child(-n+5) th {
+                font-weight: 400;
+            }
+            .delivery-title {
+                line-height: 40px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            .red-color {
+                color: red;
+            }
+            .total-fee {
+                text-align: right;
+            }
+            tbody {
+                font-size: 13px;
+            }
+        }
+    }
+    .modal-refund-order {
+        .table-refund-order {
+            thead tr:nth-child(-n+4) th {
+                font-weight: 400;
+            }
+            .refund-title {
+                line-height: 40px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            .total-fee,
+            .shelf-name {
+                text-align: right;
+            }
+            tbody {
+                font-size: 13px;
+            }
+        }
+    }
+    .modal-inventory-order {
+        .table-inventory-order {
+            thead tr:nth-child(-n+4) th {
+                font-weight: 400;
+            }
+            .inventory-title {
+                line-height: 40px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            .total-fee,
+            .fee {
+                text-align: right;
+            }
+            tbody {
+                font-size: 13px;
+            }
+        }
+    }
+    .modal-settlement-order {
+        .table-settlement-order {
+            thead tr:nth-child(-n+4) th {
+                font-weight: 400;
+            }
+            .settlement-title {
+                line-height: 40px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: 400;
+            }
+            .td-title {
+                text-align: center;
+            }
+        }
+        .invoice-container {
+            .list-wrap {
+                margin-left:10px;
+                margin-right: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #ddd;
+                .icon-clock {
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    background-size: 100%;
+                }
+                .time {
+                    margin-left: 10px;
+                    vertical-align: -webkit-baseline-middle;
+                }
+            }
+        }
+    }
+}

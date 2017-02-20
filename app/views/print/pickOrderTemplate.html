@@ -1,0 +1,65 @@
+<div style="margin:0;text-align:center;font-size:12px;">
+    <table class="table table-bordered table-pick-order" style="width:96%;max-width: 100%;margin-top: 4px;border: 1px solid #d0d0d0;background-color: transparent;border-spacing: 0;
+    border-collapse: collapse;text-align:left;font-size: 12px;">
+        <thead>
+            <tr>
+                <th colspan="6" class="delivery-title" style="font-weight: bold;line-height: 40px;text-align: center;font-size: 14px;border: 1px solid #d0d0d0;">好品拣货单——{{printOrder.companyName}}——{{printOrder.shelfName}}</th>
+            </tr>
+            <!--             <tr>
+                <th colspan="6" style="border: 1px solid #d0d0d0;padding:4px;">
+                客户名称:{{printOrder.companyName}}
+                </th>
+            </tr> -->
+            <tr>
+                <!--                 <th colspan="3" style="border: 1px solid #d0d0d0;padding:4px;">货架:{{printOrder.shelfName}}
+                </th> -->
+            </tr>
+            <tr>
+                <th colspan="2" style="border: 1px solid #d0d0d0;padding:4px;">拣货单创建人:{{printOrder.creatorName}}
+                </th>
+                <th colspan="1" style="border: 1px solid #d0d0d0;padding:4px;">紧急度:<span class="{{printOrder.urgent>0?'red-color':''}}">{{DELIVERY_URGENCY.DESC[printOrder.urgent]}}</span>
+                </th>
+                <th colspan="3" style="border: 1px solid #d0d0d0;padding:4px;">是否新装货架:{{order.newShelf?'是':'否'}}</th>
+                <th colspan="1" style="border: 1px solid #d0d0d0;padding:4px;">企业类型:{{COMPANY_TYPE.DESC[printOrder.shelfType]}}</th>
+            </tr>
+            <tr>
+                <th style="border: 1px solid #d0d0d0;padding:4px;">序号</th>
+                <th style="border: 1px solid #d0d0d0;padding:4px;">仓位</th>
+                <!-- <th style="border: 1px solid #d0d0d0;    padding:4px;">编号</th> -->
+                <th style="border: 1px solid #d0d0d0;padding:4px;">名称</th>
+                <th style="border: 1px solid #d0d0d0;padding:4px;">上架原因</th>
+                <th style="border: 1px solid #d0d0d0;padding:4px;width:50px;">数量</th>
+                <th style="border: 1px solid #d0d0d0;padding:4px">实际数量</th>
+                <th style="border: 1px solid #d0d0d0;padding:4px;">备注</th>
+            </tr>
+        </thead>
+        <!--新品上架-->
+        <tbody ng-if="printOrder.productList.length>0">
+            <tr ng-repeat="product in printOrder.productList">
+                <td style="border: 1px solid #d0d0d0;padding:4px;text-align:center">{{$index+1}}</td>
+                <td style="border: 1px solid #d0d0d0;padding:4px;">
+                    <span ng-repeat="x in product.positions">{{x.name+';'}}</span>
+                </td>
+                <!-- <td style="border: 1px solid #d0d0d0;    padding:4px;">{{product.skuCode}}</td> -->
+                <td style="border: 1px solid #d0d0d0;padding:4px;">{{product.productName}}</td>
+                <td style="border: 1px solid #d0d0d0;padding:4px;">
+                    <span ng-if="product.suiteId!=0&&product.suiteId">心愿单({{product.suiteName.substr(0,1)}})</span>
+                    <span ng-if="product.managerOrderId">选购单</span>
+                </td>
+                <td style="border: 1px solid #d0d0d0;padding:4px;">{{product.itemNum}}</td>
+                <td style="border: 1px solid #d0d0d0;padding:4px;"></td>
+                <td style="border: 1px solid #d0d0d0;padding:4px;"></td>
+                <!--                             <td style="border: 1px solid #d0d0d0;    padding:4px;">{{product.price/100.0}}元</td> -->
+                <!--   <td style="border: 1px solid #d0d0d0;    padding:4px;">{{product.price*product.itemNum/100.0}}元</td> -->
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="total-fee" style="border: 1px solid #d0d0d0;    padding:4px;">送货总价(人民币): {{printOrder.orderFee/100.0}}元</td>
+                <td colspan="3" style="border: 1px solid #d0d0d0;    padding:4px;">
+                    拣货单更新:{{utilService.parseTimeByLong(printOrder.updateTime,'yyyy-MM-dd')}}
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

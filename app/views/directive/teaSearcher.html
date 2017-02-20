@@ -1,0 +1,11 @@
+<div class="top-searcher">
+    <company-searcher subclass="input-group left " empty-callback="selectWelfareCompany({})" select-company="selectWelfareCompany(company)" style="display:inline;""></company-searcher>
+
+    <div class="time-select" ng-if="showTimeSelect=='true'">
+        <input type="date" class="input-starttime" placeholder="开始时间" ng-model="queryParams.startTime" />-
+        <input type="date" class="input-endtime" placeholder="结束时间" ng-model="queryParams.endTime" />
+    </div>
+    <drop-down btn-style="btn btn-default dropdown-toggle querytype-btn" list={{isUpdateTimeChoices}} default-item="{{isUpdateTimeChoices[0]}}" ng-model="queryParams.isUpdateTime" select="selectIsUpadate(item)" prevent-auto-selected="true">
+    </drop-down>
+    <button class="btn btn-default btn-search" ng-click="search({queryParams:queryParams})">查询</button>
+</div>

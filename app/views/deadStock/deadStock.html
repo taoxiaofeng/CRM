@@ -1,0 +1,351 @@
+<div ng-controller="deadStock" class="dead-stock container-fluid">
+    <div class="header-view">
+        <div class="input-group col-md-5">
+            <input type="text" class="form-control input-products-search" placeholder="根据商品名称或代码查询" ng-model="queryParams.productName" ng-keyup="productKeyup($event)" />
+            <div class="input-group-btn">
+                <button class="btn btn-default  dropdown-toggle " ng-click="getDeadStockProductList()">查询</button>
+            </div>
+        </div>
+    </div>
+    <table ng-table="tableParams" class="table table-condensed table-bordered table-hover ngtable  deadstock-table table-mini" show-filter="true">
+        <thead>
+            <th>序号</th>
+            <th>商品ID</th>
+            <th>商品名称</th>
+            <th>所属品类</th>
+            <th>
+                <sort-button title="商品售价" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'price')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="铺货货架数" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'distribShelfCount')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="同品类复购率偏离值" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'reBuyRateDeviate')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="同品类出货率偏离值" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'shipmentRateDeviate')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="最近7日销售均值" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'salesCountAvg')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="最近7日销售额均值" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'salesFeeAvg')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="库存" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'stock')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="可用库存" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'availableStock')"></sort-button>
+            </th>
+            <th>
+                <sort-button title="库存积压指数" asc-sort-code=1 desc-sort-code=-1 sort-callback="sort(item,'overStockRate')"></sort-button>
+            </th>
+            <th>操作</th>
+        </thead>
+        <tr ng-repeat="pro in $data">
+            <td>{{$index+1}}</td>
+            <td sortable="''">{{pro.skuCode}}</td>
+            <td sortable="''">{{pro.productName}}</td>
+            <td sortable="''">{{pro.category.categoryName||'-'}}</td>
+            <td sortable="''">{{pro.price | rmb}}</td>
+            <td sortable="''">{{pro.distribShelfCount}}</td>
+            <td sortable="''">{{pro.reBuyRateDeviate}}</td>
+            <td sortable="''">{{pro.shipmentRateDeviate}}</td>
+            <td sortable="''">{{pro.salesCountAvg}}</td>
+            <td sortable="''">{{pro.salesFeeAvg}}</td>
+            <td sortable="''">{{pro.stock}}</td>
+            <td sortable="''">{{pro.availableStock}}</td>
+            <td sortable="''">{{pro.overStockRate}}</td>
+            <td>
+                <button class="btn btn-danger btn-sm" href="javascript:;" ng-click="delDeadStockProduct(pro)"><span class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <h5>1 同品类复购率偏离值=单品复购率-单品所在品类复购率均值
+单品所在品类复购率均值=同品类单品复购率加总/同品类单品数</h5>
+    <h5>2 同品类货架出货率偏离值=单品货架出货率-单品所在品类货架出货率
+单品所在品类货架出货率=同品类单品货架出货率加总/同品类单品数</h5>
+    <h5>3 库存积压指数=库存数/最近5日出库量均值</h5>
+    <!-- 管理品类Modal -->
+    <script type="text/ng-template" id="productCategoryManage">
+        <div class="modal-category-manage">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">管理商品品类</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <div class="level-one-manage">
+                    <label>一级品类</label>
+                    <input type="text" class="form-control" required ng-model="addLevelOne.categoryName" />
+                    <button class="btn btn-primary btn-add" ng-click="createCategory(addLevelOne,CONSTANTS.CATEGORY_LEVEL.ONE)">新增</button>
+                    <button class="btn btn-default btn-edit" ng-click="openLevelOneEditWin()">编辑</button>
+                </div>
+                <div ng-if="levelOneCategoryList.length" class="existing-categories">
+                    <ul class="level-one-wrap list-group">
+                        <li ng-repeat="item in levelOneCategoryList|filter:levelOneCategoryManageList" class="list-group-item" ng-class="{true:'active',false:''}[item.id==selectedLevelOneCategory.id]" ng-click="selectLevelOne($index)">
+                            {{item.categoryName}}
+                        </li>
+                    </ul>
+                    <div class="level-two-wrap">
+                        <div class="level-two-add">
+                            <input type="text" class="form-control" required ng-model="addLevelTwo.categoryName" />
+                            <button class="btn btn-primary btn-add" ng-click="createCategory(addLevelTwo,CONSTANTS.CATEGORY_LEVEL.TWO)">新增</button>
+                        </div>
+                        <ul class="level-two-categories-edit">
+                            <li ng-repeat="lineList in levelTwoCategoryList">
+                                <div ng-repeat="item in lineList" class="level-two-edit">
+                                    <input type="text" class="form-control" ng-disabled="!item.inEdit" required ng-model="item.categoryName" />
+                                    <button ng-if="!item.inEdit" type="button" class="btn btn-default" ng-click="item.inEdit=!item.inEdit">编辑</button>
+                                    <button ng-if="item.inEdit" type="button" class="btn btn-default" ng-click="modifyCategory(item,CONSTANTS.CATEGORY_LEVEL.TWO)">保存</button>
+                                    <button type="button" class="btn btn-default" ng-click="deleteCategory(item,CONSTANTS.CATEGORY_LEVEL.TWO)"><span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- 一级品类编辑Modal -->
+    <script type="text/ng-template" id="levelOneCategoryEdit">
+        <div class="modal-level-one-category-edit">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">编辑一级品类</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <ul>
+                    <li ng-repeat="levelOne in levelOneCategoryList|filter:levelOneCategoryManageList">
+                        <input type="text" class="form-control" ng-disabled="!levelOne.inEdit" required ng-model="levelOne.categoryName" />
+                        <button ng-if="!levelOne.inEdit" type="button" class="btn btn-default" ng-click="levelOne.inEdit=!levelOne.inEdit">编辑</button>
+                        <button ng-if="levelOne.inEdit" type="button" class="btn btn-default" ng-click="modifyCategory(levelOne,CONSTANTS.CATEGORY_LEVEL.ONE)">保存</button>
+                        <button type="button" class="btn btn-default" ng-click="deleteCategory(levelOne,CONSTANTS.CATEGORY_LEVEL.ONE)"><span class="glyphicon glyphicon-remove"></span></button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </script>
+    <!-- 商品编辑 -->
+    <script type="text/ng-template" id="productEdit">
+        <div class="modal-header">
+            <button type="button" style="position: absolute;top: 5px;right: 8px;color: red;" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">编辑/新建商品</h4>
+        </div>
+        <form name="productFrom" ng-submit="productSave(product)">
+            <div class="modal-body form-inline">
+                <ul class="product-from-ul">
+                    <li>
+                        <div class="col-md-4">
+                            <div class="div-inline">
+                                <label class="product-label">商品编号:</label>
+                                <input type="text" class="form-control" required-input ng-model="product.skuCode" required/>
+                                <label class="require-tip">*</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="div-inline">
+                                <label class="product-label">商品名称:</label>
+                                <input type="text" class="form-control" required-input ng-model="product.productName" required/>
+                                <label class="require-tip">*</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="div-inline">
+                                <label class="product-label">商品重量:</label>
+                                <input type="text" class="form-control" ng-model="product.net" />
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4">
+                            <label class="product-label">计量单位:</label>
+                            <input type="text" class="form-control" ng-model="product.netUnit" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">利润等级:</label>
+                            <drop-down btn-style="btn-default" default-item={{profitLevelConfig.getDefaultItem(product.profitLevel)}} desc-field="name" list={{profitLevelConfig.getList()}} select="profitLevelConfig.selectItem(item)"></drop-down>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">原产地:</label>
+                            <drop-down btn-style="btn-default" default-item={{productOriginPlaceConfig.getDefaultItem(product.originPlace)}} desc-field="name" list={{originPlaceList}} select="productOriginPlaceConfig.selectItem(item)"></drop-down>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4">
+                            <label class="product-label"> 市 场 价 : </label>
+                            <input type="number" class="form-control input-price" required required-input ng-model="product.originPrice" min="0.00" step="0.01" />
+                            <label>元</label>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">售价:</label>
+                            <input type="number" class="form-control input-price" required required-input ng-model="product.price" min="0.00" step="0.01" />
+                            <label>元</label>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">保 质 期 :</label>
+                            <input type="text" class="form-control" required required-input ng-model="product.expiryDate" />
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4">
+                            <label class="product-label">品牌认知度:</label>
+                            <drop-down btn-style="btn-default" default-item={{productBrandAwarenessConfig.getDefaultItem(product.brandAwareness)}} desc-field="name" list={{brandAwarenessList}} select="productBrandAwarenessConfig.selectItem(item)"></drop-down>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">品牌档次:</label>
+                            <drop-down btn-style="btn-default" default-item={{productBrandGradeConfig.getDefaultItem(product.brandGrade)}} desc-field="name" list={{brandGradeList}} select="productBrandGradeConfig.selectItem(item)"></drop-down>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-4">
+                            <label class="product-label">一级品类:</label>
+                            <drop-down btn-style="btn-default" desc-field="categoryName" default-item={{productLevelOneCategoryConfig.getDefaultItem(product.categoryId)}} list={{levelOneCategoryList}} select="productLevelOneCategoryConfig.selectItem(item)"></drop-down>
+                            <label class="require-tip">*</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">二级品类:</label>
+                            <drop-down btn-style="btn-default" desc-field="categoryName" default-item={{productLevelTwoCategoryConfig.getDefaultItem(product.subCategoryId)}} list={{productLevelTwoCategoryConfig.list}} select="productLevelTwoCategoryConfig.selectItem(item)" prevent-auto-selected=true></drop-down>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li ng-repeat="lineLabels in labelConfig.lineslist">
+                        <div ng-repeat="item in lineLabels track by $index" class="col-md-4">
+                            <label class="product-label">{{item.type}}:</label>
+                            <drop-down btn-style="btn-default" desc-field="name" list={{item.entries}} default-item={{labelConfig.getDefaultItem(product.showLabelIdList[item.parentIndex],item.parentIndex)}} select="labelConfig.selectItem(item,lineLabels.index)" prevent-auto-selected=true></drop-down>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li ng-if="product.id">
+                        <div class="col-md-6">
+                            <label class="product-label">库存:</label>
+                            <input type="text" ng-model="product.stock" ng-hide="true" />
+                            <label class="stock-num">{{product.stock}}</label>
+                            <input type="button" value="进货" class="btn btn-default" ng-click="modalModifystock('modal-modifystock','sm','add')" />
+                            <input type="button" value="过期" class="btn btn-default" ng-click="modalModifystock('modal-modifystock','sm','expire')" />
+                            <input type="button" value="损耗" class="btn btn-default" ng-click="modalModifystock('modal-modifystock','sm','waste')" />
+                        </div>
+                        <div class="col-md-2">
+                            <button class="product-stock-change-log btn btn-primary" ng-click="showProductStockChangeLog(product,$event)">库存修改记录</button>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="product-label">可用库存:</label>
+                            <label class="stock-num">{{product.availStock||0}}</label>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-12">
+                            <label class="product-label" style="float:left;line-height: 38px;">仓位:</label>
+                            <div isteven-multi-select input-model="positionData" output-model="product.positionOutPutData" button-label="name" item-label="name" tick-property="selected" translation="localLang" max-height="200px" style="float:left;" search-property="name" min-search-length="1">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li ng-if="product.id">
+                        <div class="col-md-12">
+                            <label class="product-label">总销量:</label>
+                            <label class="sale-count">{{product.sales}}</label>
+                            <input type="hidden" ng-model="product.createTime" />
+                            <label>计算起始日期: {{product.createTime | date: "yyyy-MM-dd HH:mm:ss" }}</label>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-12">
+                            <label class="prodcut-label" style="float:left;">图片上传:</label>
+                            <uploader class="col-sm-4" index="$index" value="product.cover" ng-model="product.cover" path="product">
+                            </uploader>
+                            <img style="width:60px;margin-left:10px" class="{{product.cover?'':'hide'}}" ng-click="showBigImage(product.cover)" src="{{imgPrefix+product.cover}}" />
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                    <li>
+                        <div class="col-md-12">
+                            <label class="prodcut-label">备注</label>
+                            <textarea class="form-control" placeholder="备注一下" cols="80" rows="3" ng-model="product.des"></textarea>
+                        </div>
+                        <div class="clear-both"></div>
+                    </li>
+                </ul>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="cancel();">取消</button>
+                    <button type="submit" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </form>
+    </script>
+    <script type="text/ng-template" id="productDelete">
+        <!--创建一个局部视图，需要的时候引用它， 下面会用到-->
+        <div class="modal-header">
+            <h4 class="modal-title">删除商品</h4>
+            <button style="position: absolute;top: 5px;right: 8px;color: red;" type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <form class="modal-body" name="deleteForm" novalidate ng-submit="productDeleteSave(deleteForm)">
+            <!--novalidate-->
+            <input type="hidden" ng-model="deleteForm.productId" />
+            <span style="font-family: Microsoft YaHei;font-size: 15px; color: red;">您确定要<u>删除</u>这条商品数据吗?</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary">确认</button>
+            </div>
+        </form>
+    </script>
+    <!--进货/过期/损耗-->
+    <script type="text/ng-template" id="modal-modifystock">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">修改库存</h4>
+        </div>
+        <div class="modal-body">
+            <input class="form-control change-num" type="number" ng-model="stockBalance" placeholder="请输入本次{{tipStr}}数量" />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+            <button type="button" class="btn btn-primary" ng-click="operateStock(stockBalance)">确定</button>
+        </div>
+    </script>
+    <!-- 库存修改记录 -->
+    <script type="text/ng-template" id="modal-productstockchangelogpanel">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">库存修改记录</h4>
+        </div>
+        <div class="modal-body">
+            <table ng-table="productStockChangeLogTable" class="table table-condensed table-bordered table-hover ngtable  account-table table-mini">
+                <thead>
+                    <th>序号</th>
+                    <th>时间</th>
+                    <th>类型</th>
+                    <th>数值</th>
+                    <th>最新库存</th>
+                    <th>操作账号</th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in $data">
+                        <td>{{x.index}}</td>
+                        <td>{{x.createTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                        <td>{{x.type|desc:'PRODUCT_STOCK_CHANGE_TYPE'}}</td>
+                        <td>{{x.change}}</td>
+                        <td>{{x.stock}}</td>
+                        <td>{{x.managerName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+        </div>
+    </script>
+</div>

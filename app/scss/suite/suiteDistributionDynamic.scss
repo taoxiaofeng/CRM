@@ -1,0 +1,34 @@
+.suiteDistributionDynamic {
+  .header-view {
+    .holiday-welfare-title {
+      text-align: center;
+    }
+    .query {
+      padding: 34px 15px 15px 0;
+      .suiteName,
+      .companyName{
+        margin-left: 15px;
+        width: 200px;
+        float: left;
+      }
+      .input-starttime,
+      .input-endtime {
+        float: left;
+        width: 200px;
+      }
+      .separator {
+        float: left;
+        padding: 5px;
+      }
+      .btn-search {
+        float: left;
+        margin-left: 15px;
+      }
+      .btn-wrap {
+        .search-btn {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}

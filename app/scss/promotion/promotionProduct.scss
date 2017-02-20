@@ -1,0 +1,78 @@
+.promotion-product {
+    .header-view {
+        padding-top: 8px;
+        padding-bottom: 46px;
+        .input-group {
+            float: left;
+        }
+        .btn-search {
+            margin-left: 8px;
+        }
+        .btn-addproduct,
+        .btn-addtocategory,
+        .btn-managecategory {
+            float: right;
+        }
+        .btn-addtocategory {
+            margin-right: 50px;
+        }
+        .btn-managecategory {
+            margin-right: 8px;
+        }
+    }
+    /*商品编辑Modal*/
+    .product-form-ul {
+        list-style-type: none;
+        &>li {
+            margin-bottom: 12px;
+        }
+        .product-label {
+            width: 80px;
+        }
+        .category-label {
+            float: left;
+            line-height: 38px;
+        }
+        .warn-tip {
+            color: red;
+        }
+        .clear-both {
+            clear: both;
+        }
+        textarea {
+            height: 150px;
+        }
+        input[type="text"] {
+            width: 160px;
+        }
+        .input-price {
+            width: 140px !important;
+        }
+        .input-title {
+            width: 225px !important;
+        }
+        .input-subtitle {
+            width: 310px !important;
+        }
+        .uploader-head {
+            @include display-flex;
+            @include prefixer(align-items, center, webkit moz o ms spec);
+            margin-bottom: 8px;
+        }
+        table {
+            img {
+                width: 32px;
+            }
+        }
+    }
+    .link-modal {
+        .wechat-link {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .internal-link {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+    }
+}

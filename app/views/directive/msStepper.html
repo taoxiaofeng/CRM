@@ -1,0 +1,56 @@
+<div class="ms-stepper-horizontal">
+    <div class="ms-stepper-navigation-wrapper">
+        <div class="ms-stepper-navigation" layout="row" layout-align="center center">
+            <md-button class="ms-stepper-navigation-item"
+                       ng-class="{'current': isStepCurrent(step.stepNumber), 'valid': isStepValid(step.stepNumber), 'disabled': isStepDisabled(step.stepNumber), 'optional': isStepOptional(step.stepNumber)}"
+                       ng-click="gotoStep(step.stepNumber)"
+                       ng-disabled="isStepDisabled(step.stepNumber)"
+                       ng-repeat="step in steps" layout="row" layout-align="start center">
+
+                <div class="step md-accent-bg"
+                     layout="row" layout-align="center center">
+                <span ng-if="!isStepValid(step.stepNumber) || isStepOptional(step.stepNumber)">
+                    {{step.stepNumber}}
+                </span>
+                <span ng-if="isStepValid(step.stepNumber) && !isStepOptional(step.stepNumber)">
+                    <i class="icon icon-check s18"></i>
+                </span>
+                </div>
+
+                <div layout="column" layout-align="start start">
+                    <div class="title">{{step.stepTitle}}</div>
+                    <div class="subtitle" ng-if="isStepOptional(step.stepNumber)">Optional</div>
+                </div>
+            </md-button>
+        </div>
+    </div>
+
+    <div class="ms-stepper-steps" ng-transclude></div>
+    <div class="ms-stepper-controls" layout="row" layout-align="center center">
+        <md-button class="md-accent md-raised"
+                   ng-disabled="isFirstStep()"
+                   ng-click="gotoPreviousStep()">
+            上一步
+        </md-button>
+
+        <div class="ms-stepper-dots">
+            <span ng-repeat="step in steps"
+                  ng-class="{'selected md-accent-bg':currentStepNumber === $index + 1}">
+            </span>
+        </div>
+
+        <md-button class="md-accent md-raised"
+                   ng-if="!isLastStep()"
+                   ng-disabled="!isStepValid(currentStepNumber)"
+                   ng-click="gotoNextStep()">
+            下一步
+        </md-button>
+
+        <md-button type="submit" class="md-accent md-raised"
+                   ng-click="resetForm()"
+                   ng-if="isLastStep()"
+                   ng-disabled="!isFormValid()">
+            确认
+        </md-button>
+    </div>
+</div>

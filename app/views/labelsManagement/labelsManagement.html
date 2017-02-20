@@ -1,0 +1,174 @@
+<div ng-controller="labelsManagement" class="labelsManagement container-fluid">
+    <div class="input-group col-md-5">
+        <input type="text" class="form-control input-products-search" placeholder="根据商品标签名称查询"
+               ng-model="labelName">
+        <div class="input-group-btn">
+            <button class="btn btn-default btn-query" ng-click="labelQuery(labelName)">查询</button>
+            <button class="btn btn-default btn-addTags" ng-click="tagEdit()">添加标签</button>
+            <button class="btn btn-default btn-manageTags" ng-click="tagsType()">管理标签类型</button>
+        </div>
+    </div>
+
+    <div>
+        <table ng-table="tableParams"
+               class="table table-condensed table-bordered table-hover ngtable  account-table table-mini table-sp">
+            <thead>
+            <th>序号</th>
+            <!--<th>选择</th>-->
+            <th>商品标签名</th>
+            <th>
+                <sort-button title="标签类型" asc-sort-code=1 sort-callback="sortByTagsType(item)"></sort-button>
+            </th>
+            <th>备注</th>
+            <th>操作</th>
+            </thead>
+            <tr ng-repeat="tType in $data">
+                <td>{{$index + 1}}</td>
+                <!--<td>
+                    <input type="checkbox" id="checkbox_' + arguments[1].id + '" class="chk_1"
+                           ng-click="updateSelection($event,arguments[1].id)"/>
+                    <label for="checkbox_' + arguments[1].id + '"></label>
+                </td>-->
+                <td>{{tType.name}}</td>
+                <td>{{tType.type}}</td>
+                <td>{{tType.remark}}</td>
+                <td>
+                    <button class="btn btn-default btn-sm" ng-click="tagEdit(tType)"><span
+                            class="glyphicon glyphicon-pencil"></span></button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-danger btn-sm" ng-click="tagDeleteClick(tType.id,tType.name)"><span
+                            class="glyphicon glyphicon-trash"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--新增标签modal-->
+    <script type="text/ng-template" id="addTagsModal">
+        <div class="modal-header">
+            <h3 class="modal-title">新增/编辑商品</h3>
+            <button type="button" class="close close-xx" ng-click="cancel()"><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form class="modal-body" autocomplete="off" name="tagsForm">
+            <div class="form-group tag-name" ng-class="{'has-error' : ''}">
+                <label><span class="add-tags">标签名称:</span></label>
+                <input type="text"
+                       autocomplete="off"
+                       name="tagsName"
+                       class="form-control input-name"
+                       required
+                       ng-model="addLabel.tagsName"
+                       placeholder="请输入标签名称"/>
+                <div class="form-error"
+                     ng-show="(tagsForm.tagsName.$invalid && tagsForm.tagsName.$dirty && !tagsForm.tagsName.$focused) || (tagsForm.tagsName.$invalid)">
+                    <span ng-show="tagsForm.tagsName.$error.required"
+                          style="font-size: 10px; color: red;">标签名称不能为空!!!</span>
+                </div>
+            </div>
+            <div class="form-group _tagsType">
+                <label><span class="tagsTypeOne">标签类型:</span></label>
+                <div class="btn-group drow-down dropdown  btn-tType">
+                    <drop-down btn-style="btn btn-default dropdown-toggle querytype-btn"
+                               list={{tagsList}}
+                               default-item={{defaultItem}} desc-field="type" ng-model="addLabel.type"
+                               select="selectTagType(item)" disabled={{addLabel.id}}>
+                    </drop-down>
+                </div>
+            </div>
+            <div class="note">
+                <label><span class="note-one">备注:</span></label>
+                <textarea type="text"
+                          autocomplete="off"
+                          name="noteName"
+                          class="form-control note-name"
+                          placeholder="请输入备注信息......"
+                          ng-model="addLabel.noteName"
+                ></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" ng-click="cancel()">取消</button>
+                <button type="button" class="btn btn-primary" ng-disabled="tagsForm.$invalid"
+                        ng-click="addTagsConfirm(addLabel,this)">确认
+                </button>
+            </div>
+        </form>
+    </script>
+
+    <!--管理标签类型modal-->
+    <script type="text/ng-template" id="managementTagType">
+        <div class="modal-header">
+            <h3 class="modal-title">管理标签类型</h3>
+            <button type="button" class="close close-xx" ng-click="cancel()"><span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form class="modal-body" autocomplete="off" name="tagsFormTwo" ng-submit="">
+            <div class="form-group" ng-class="{'has-error' : ''}">
+                <input type="text"
+                       autocomplete="off"
+                       name="newTypeName"
+                       class="form-control _addTagsType"
+                       required
+                       ng-model="newTypeName.type"
+                       placeholder="请输入新标签类型"/>
+                <button class="btn addTagsType" ng-disabled="!newTypeName"
+                        ng-click="addTagsType(newTypeName)">新增
+                </button>
+                <div class="form-error-two"
+                     ng-show="(tagsFormTwo.newTypeName.$invalid && tagsFormTwo.newTypeName.$dirty && !tagsFormTwo.newTypeName.$focused) || (tagsFormTwo.newTypeName.$invalid)">
+                    <span ng-show="tagsFormTwo.newTypeName.$error.required"
+                          style="font-size: 10px; color: red;">标签名称不能为空!!!</span>
+                </div>
+            </div>
+            <h3 ng-if="tagsList.length > 0">标签类型</h3>
+            <div class="newTagsType">
+                <ul id="existing-tagsList" class="list-groups tags-list">
+                    <li ng-repeat="tags in tagsList track by $index" class="list-group-item tags-list">
+                        <input type="text" class="form-control input-typename" required
+                               ng-disabled="!tags.inEdit " ng-model="tags.type"/>
+                        <button ng-if="!tags.inEdit" type="button" class="btn btn-default btn-edit ng-scope "
+                                ng-click="tags.inEdit=!tags.inEdit"><span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                        <button ng-if="tags.inEdit" type="button" class="btn btn-default btn-save ng-scope"
+                                ng-click="modifyType(tags)"><span class="glyphicon glyphicon-ok"></span></button>
+                        <button class="btn btn-danger btn-sm btn-xx" ng-click="deleteTableTyleClick(tags.id,tags.type)"><span
+                                class="glyphicon glyphicon-trash"></span></button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+    </script>
+    <!--删除标签modal-->
+    <script type="text/ng-template" id="deleteTagModel">
+        <div class="modal-header">
+            <h3 ng-if="" class="modal-title">删除标签</h3>
+            <button style="position: absolute;top: 5px;right: 8px;color: red;" type="button" class="close"
+                    ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <form class="modal-body" name="tagsForm" novalidate ng-submit="">
+            <!--novalidate-->
+            <span ng-model="tagTypeName"
+                  style="font-family: Microsoft YaHei;font-size: 15px; color: red;">是否确认删除&nbsp;<u>{{name}}</u>&nbsp;标签吗?</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="deleteTable()">确认</button>
+            </div>
+        </form>
+    </script>
+    <!--删除标签类型modal-->
+    <script type="text/ng-template" id="deleteTagTypeModel">
+        <div class="modal-header">
+            <h3 ng-if="" class="modal-title">删除标签类型</h3>
+            <button style="position: absolute;top: 5px;right: 8px;color: red;" type="button" class="close"
+                    ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <form class="modal-body" name="tagsForm" novalidate ng-submit="submitForm(tagsForm.$valid)">
+            <!--novalidate-->
+            <span ng-model="tagTypeName"
+                  style="font-family: Microsoft YaHei;font-size: 15px; color: red;">是否确认删除&nbsp;<u>{{type}}</u>&nbsp;标签类型吗?</span>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary" ng-click="deleteLabelType()">确认</button>
+            </div>
+        </form>
+    </script>
+</div>

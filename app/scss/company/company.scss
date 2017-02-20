@@ -1,0 +1,111 @@
+.company {
+    .header-view {
+        .input-company-search {
+            /*            width: 400px;
+            float: left;*/
+        }
+        .btn-excelimport {
+            float: right;
+            margin-right: 8px;
+        }
+        .search-btn {
+            border-radius: 0;
+        }
+        .input-group {
+            float: left;
+        }
+        .querytype-btn {
+            margin-left: 0;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: 0;
+        }
+        .btn-export-excel {
+            margin-left: 8px;
+        }
+        .div-company-table {
+            height: 600px;
+            overflow: auto;
+        }
+    }
+    .company-table {
+        background-color: #FFFFFF;
+        margin-top: 10px;
+        .btn-recovery-company {
+            color: red;
+        }
+        .company-table-pagination {
+            float: right;
+            margin-right: 26px;
+        }
+    }
+    .modal-middle {
+        width: 680px;
+    }
+    .company-add-modal {
+        .icon-plus,
+        .icon-delete {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            background-size: 100%;
+            vertical-align: sub;
+        }
+        .changlog-btn {
+            /*border-left: none;*/
+            float: none;
+        }
+        .input-picking-remark {
+            width: 350px;
+        }
+    }
+    .contact-table {
+        .edit-col {
+            width: 72px;
+            margin: auto;
+        }
+    }
+    ._md-chip-input-container {
+        display: none;
+    }
+    .userDefined {
+        width: 800px;
+        margin: 0 auto;
+        p {
+            text-align: center;
+            font-size: 14px;
+        }
+        .addBar {
+            height: 45px;
+            text-align: right;
+            a {
+                color: #000;
+                text-decoration: none;
+                display: inline-block;
+                position: relative;
+                line-height: 35px;
+            }
+            .addBlock {
+                float: left;
+            }
+        }
+    }
+    .blockBody {
+        overflow: auto;
+        border: 1px solid #ddd;
+        max-height: 250px;
+        margin-bottom: 20px;
+        .block-table {
+            margin-top: -1px;
+            margin-bottom: 0px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+    }
+    .product-search {
+        display: inline-block;
+        width: 150px;
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,280 @@
+.sidebar {
+    @include display-flex;
+    @include prefixer(flex-direction, column, webkit moz o spec);
+    @inlcude prefixer(box-orient, vertical, webkit moz o spec);
+    -ms-flex-direction: column;
+    margin: 0;
+    padding: 0;
+    width: $sidebarWidth;
+    min-width: $sidebarWidth;
+    max-width: $sidebarWidth;
+    overflow-x: hidden;
+    transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2), width 0.1s linear, min-width 0.1s linear, max-width 0.1s linear;
+    box-shadow: $whiteframe-shadow-6dp;
+    @include prefixer(transform, translate3d(0, 0, 0), moz webkit o spec);
+    background-color: rgb(45, 50, 62);
+    color: rgba(255, 255, 255, 1);
+    overflow: hidden;
+    z-index: 9998;
+    .sidebar-header {
+        @include display-flex;
+        @include prefixer(justify-content, space-between, webkit moz o spec);
+        @include prefixer(box-pack, justify, webkit moz o spec);
+        @include prefixer(align-items, center, webkit moz o spec);
+        @include prefixer(box-align, center, webkit moz o spec);
+        -ms-flex-pack: justify;
+        -ms-flex-align: center;
+        width: 100%;
+        height: 60px;
+        min-height: 60px;
+        background-color: rgba(255, 255, 255, 0.05);
+        padding: 0 16px 0 16px;
+        box-shadow: $whiteframe-shadow-1dp;
+        .logo {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            pointer: cursor;
+            .logo-image {
+                display: block;
+                background: material-color('light-blue', '600');
+                width: 32px;
+                min-width: 32px;
+                height: 32px;
+                line-height: 32px;
+                text-align: center;
+                font-size: 16px;
+                font-weight: 500;
+                color: #FFFFFF;
+                border-radius: 2px;
+            }
+            .logo-text {
+                color: #FFFFFF;
+                margin-left: 16px;
+                font-size: 16px;
+            }
+            .loginicon {
+                display: inline-block;
+                width: 24px;
+                height: 22px;
+                background-size: 100%;
+                background-position: center;
+            }
+        }
+        .fold-toggle {
+            transition: transform 0.3s ease-in-out 0.1s;
+            transform: rotate(0deg);
+            margin: 0;
+            padding: 8px;
+            /*            padding-right: 0;*/
+            width: 34px !important;
+            height: 34px !important;
+            cursor: pointer;
+        }
+    }
+    .version {
+        position: absolute;
+        font-size: 12px;
+        left: 5px;
+        bottom: 10px;
+    }
+    .port-wrap {
+        @include prefixer(flex, 1, webkit moz o spec);
+        overflow-y: auto;
+        .sidebaricon {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            background-size: cover;
+        }
+    }
+    .port-wrap::-webkit-scrollbar {
+        background-color: #2d323e;
+        width: 0;
+    }
+    &:not(.md-locked-open) {
+        box-shadow: $whiteframe-shadow-8dp;
+    }
+    .sidebar-btn,
+    .sub-sidebar-btn {
+        position: relative;
+        @include display-flex;
+        /*   margin-top: 16px;*/
+        padding-right: 16px;
+        padding-left: 16px;
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: 18px 18px;
+        background-position: 16px 50%;
+        border: 0;
+        a {
+            display: inline-block;
+            width: 100%;
+            text-decoration: none;
+            color: #fff;
+            height: 48px;
+            line-height: 48px;
+            &>span {
+                font-size: 14px;
+            }
+        }
+        &.active {
+            background-color: rgb(3, 155, 229);
+            .icon-arrow {
+                transform: rotate(90deg);
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                -o-transform: rotate(90deg);
+            }
+        }
+        .port {
+            background-repeat: no-repeat;
+            background-size: 18px 18px;
+            background-position: 0 50%;
+        }
+        .parent-title {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 48px;
+            line-height: 48px;
+            text-decoration: none;
+            color: #fff;
+            background-position: 16px 50%;
+            &>span {
+                font-size: 14px;
+                width: 100%;
+                display: inline-block;
+                padding-left: 50px;
+                padding-right: 50px;
+            }
+            .icon-arrow {}
+            i {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 16px;
+                margin: auto;
+                font-size: 16px;
+                width: 16px;
+                height: 16px;
+                min-width: 16px;
+                min-height: 16px;
+                line-height: 16px;
+            }
+        }
+    }
+    .sidebar-btn.parent {
+        padding: 0;
+        flex-direction: column;
+        height: auto;
+        .children-list {
+            height: 0;
+        }
+    }
+    .sidebar-btn.parent.active {
+        background-color: rgba(0, 0, 0, .12);
+        .children-list {
+            height: auto;
+        }
+    }
+    .children-list {
+        width: 100%;
+        list-style: none;
+    }
+    .sub-sidebar-btn {
+        padding: 0;
+    }
+    &.folded {
+        position: absolute;
+        height: 100%;
+        width: $sidebarFoldedWidth;
+        min-width: $sidebarFoldedWidth;
+        max-width: $sidebarFoldedWidth;
+        .sidebar-header {
+            .fold-toggle {
+                @include prefixer(transform, rotate(180deg), webkit moz o spec);
+            }
+        }
+        .sidebar-btn {
+            a span {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        .parent-title {
+            /*            .icon-arrow {
+                display: none;
+            }*/
+        }
+        &:hover {
+            width: $sidebarWidth;
+            min-width: $sidebarWidth;
+            max-width: $sidebarWidth;
+            .sidebar-btn {
+                a span {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: $layout-breakpoint-sm) {
+    .ms-navigation-folded {
+        #view {
+            margin-left: $sidebarFoldedWidth;
+        }
+        .sidebar {
+            position: absolute;
+            .navigation-header {
+                .fold-toggle {
+                    transform: rotate(180deg);
+                    opacity: 0;
+                }
+            }
+        }
+        &.ms-sidebar-folded-open {
+            .sidebar {
+                .sidebar-header {
+                    .fold-toggle {
+                        transition: transform 0.3s ease-in-out 0.1s, opacity 0.3s ease-in-out 0.2s;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        &:not(.ms-sidebar-folded-open) {
+            .sidebar {
+                position: absolute;
+                width: $sidebarFoldedWidth;
+                min-width: $sidebarFoldedWidth;
+                max-width: $sidebarFoldedWidth;
+                .sidebar-header {
+                    padding: 0 16px;
+                    .logo-text {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

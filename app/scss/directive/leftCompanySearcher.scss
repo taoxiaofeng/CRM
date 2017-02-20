@@ -1,0 +1,31 @@
+.left-company-search {
+    height: 100%;
+    width: 20%;
+    float: left;
+    border-right: $SpitLine;
+    .input-company-search {
+        margin-left: 8px;
+        margin-top: 8px;
+        width: 70%;
+        display: inline-block;
+    }
+    .noinformation-suggest,
+    .limit-tip{
+        margin-left: 16px;
+        margin-top: 8px;
+    }
+    .limit-tip{
+        color: $dark-red-color;
+    }
+    .list-searchresult .list-group-item:first-child,
+    .list-searchresult .list-group-item:last-child {
+        border-radius: 0px;
+    }
+    .list-searchresult {
+        height: 600px;
+        overflow: auto;
+        .bg-grey{
+            background-color: #E8E8E8;
+        }
+    }
+}

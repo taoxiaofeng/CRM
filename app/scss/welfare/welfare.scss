@@ -1,0 +1,82 @@
+.welfare {
+    height: 100%;
+    min-height: 100%;
+    .welfare-table,
+    .staff-table {
+        background-color: #FFFFFF;
+        margin-top: 10px;
+    }
+    .header-view {
+        width: 100%;
+        margin-top: 10px;
+        .import-btn,
+        .export-btn {
+            border-left: 0;
+        }
+    }
+    .left {
+        float: left;
+    }
+    .nopadding {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .welfare-list-wrap {
+        .welfare-unit-list {
+            .welfare-unit {
+                .welfare-summary {
+                    padding-left: 0;
+                    padding-right: 0;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                    .time {}
+                    .average {}
+                    .static-wrap {
+                        margin-bottom: 10px;
+                    }
+                    .total {}
+                    .count {
+                        margin-left: 10px;
+                        border-radius: 10px !important;
+                    }
+                    .count:first-of-type {
+                        margin-left: 0;
+                    }
+                    .btn-wrap {
+                        display: inline-block;
+                        width: 100%;
+                        text-align: right;
+                        .state {
+                            float: left;
+                            margin-top: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .welfare-send-wrap {}
+    .add-staff-btn {
+        border-radius: 50% !important;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+    }
+    .staff-edit-form {
+        .clear {
+            float: none !important;
+        }
+    }
+    md-virtual-repeat-container {
+        height: 100%;
+    }
+    md-tabs {
+        md-tab-content {
+            min-height: 300px;
+        }
+    }
+    .head-portrait {
+        width: 32px;
+        height: 32px;
+    }
+}

@@ -1,0 +1,143 @@
+<div ng-controller="shelfManageCtrl" class="shelf-manage container-fluid">
+    <div class="shelf">
+        <div class="header-view row">
+            <company-searcher select-company="selectCompanyCallback(company)"></company-searcher>
+            <drop-down default-item={{curShelf}} list={{shelfList}} select="selectShelfCallback(item)" btn-style="btn-default"></drop-down>
+            <button class="btn btn-default btn-manageshelf" ng-disabled="!company" ng-click="manageShelf()">管理货架</button>
+            <div class="form-exportexcel">
+                <button type="submit" class="btn btn-default btn-excelexport" ng-disabled="!company" ng-click="exportShelfProducts()">货架信息导出Excel</button>
+                <div class="download-qrcode">
+                    <img class="img-qrcode" src="{{picUrl+curShelf.qrcodeInfoDto.img}}" />
+                    <label class="suggest">右键下载货架二维码</label>
+                </div>
+                </form>
+            </div>
+        </div>
+        <table ng-table="tableParams" class="table table-condensed table-bordered table-hover ngtable table-shelf-products">
+            <tr ng-repeat="shelfProduct in shelfProducts">
+                <td data-title="'位置'">{{getPositionName(shelfProduct)}}</td>
+                <td data-title="'商品名称'">{{shelfProduct.productHeader.productName}}</td>
+                <td data-title="'商品编号'">{{shelfProduct.productHeader.skuCode}}</td>
+                <td data-title="'商品图片'"><img class="product-image" src="{{picUrl+shelfProduct.productHeader.cover+'!small'}}"></td>
+                <td data-title="'单价'">{{'￥'+shelfProduct.productHeader.price/100.0}}</td>
+                <td data-title="'库存'">{{shelfProduct.header.stock}}</td>
+                <td data-title="'销量曲线图'">
+                    <button class="btn btn-link btn-checksaleschart" ng-click="checkSalesChart(shelfProduct.header.id)">查看销量曲线</button>
+                </td>
+                <td data-title="'商品详情'">
+                    <button class="btn btn-link btn-checksaleschart" ng-click="checkProductDetail(shelfProduct)">查看详情</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="hidden" id="exportExcelWrap">
+    </div>
+    <!-- 管理货架 -->
+    <script type="text/ng-template" id="modelcontent">
+        <div class="modal-manage-shelf">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">管理货架</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <form class="add-shelfname" ng-submit="createShelf($event)">
+                    <label>新增货架</label>
+                    <input type="text" class="form-control input-shelfname" required placeholder="请输入货架名称" ng-model="createShelfObj.shelfName" />
+                    <drop-down default-item={{getDefaultShelfType(shelf)}} list={{shelfTypeList}} select="selectShelfTypeCallback(item)" btn-style="btn-default"></drop-down>
+                    <button type="submit" class="btn btn-primary btn-addshelf">确定</button>
+                </form>
+                <div class="existing-shelves">
+                    <label>现有货架</label>
+                    <ul id="existing-shelflist" class="list-group">
+                        <li ng-repeat="shelf in shelfList" class="list-group-item">
+                            <input type="text" class="form-control input-shelfnumber" ng-disabled="!shelf.inEdit" value={{shelf.number}} onkeyup="value=value.replace(/[^\d]/g,'')" required ng-model="shelf.number" />
+                            <input type="text" class="form-control input-shelfname" ng-disabled="!shelf.inEdit" value={{shelf.shelfName}} required ng-model="shelf.shelfName" />
+                            <drop-down default-item={{getDefaultShelfType(shelf)}} list={{shelfTypeList}} select="selectShelfTypeCallback(item,shelf)" btn-style="btn-default" disabled=true></drop-down>
+                            <button ng-if="!shelf.inEdit" type="button" class="btn btn-default btn-edit" ng-click="shelf.inEdit=!shelf.inEdit">编辑</button>
+                            <button ng-if="shelf.inEdit" type="button" class="btn btn-default btn-save" ng-click="modifyShelf(shelf);">保存</button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
+    <!-- 销量走势图 -->
+    <script type="text/ng-template" id="modalSalesLine">
+        <div class="modal-sales-line">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">销量走势图</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <echarts-line class="sales-line" id="salesLine" xAxisData="xAxisData" seriesData="seriesData"></echarts-line>
+            </div>
+        </div>
+    </script>
+    <!-- 商品详情 -->
+    <script type="text/ng-template" id="modalProductDetail">
+        <div class="modal-product-detail">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">商品详情</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <div class="first-line">
+                    <div class="div-inline">
+                        <label class="label-title">商品编号:</label>
+                        <label class="label-value">{{curProduct.productHeader.skuCode}}</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">商品名称:</label>
+                        <label class="label-value">{{curProduct.productHeader.productName}}</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">所属品类:</label>
+                        <label class="label-value">{{curProduct.productCategory.categoryName}}</label>
+                    </div>
+                </div>
+                <div class="second-line">
+                    <div class="div-inline">
+                        <label class="label-title">商品重量:</label>
+                        <label class="label-value">{{curProduct.productHeader.net}}</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">计量单位:</label>
+                        <label class="label-value">{{curProduct.productHeader.netUnit}}</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">利润等级:</label>
+                        <label class="label-value">{{PROFIT_LEVEL.DESC[curProduct.productHeader.profitLevel]}}</label>
+                    </div>
+                </div>
+                <div class="third-line">
+                    <div class="div-inline">
+                        <label class="label-title">售价:</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="label-value">{{curProduct.productHeader.price/100.0}}元</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">原产地:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label class="label-value">{{curProduct.productHeader.originPlace}}</label>
+                    </div>
+                    <div class="div-inline">
+                        <label class="label-title">保质期:</label>
+                        <label class="label-value">{{curProduct.productHeader.expiryDate}}</label>
+                    </div>
+                </div>
+                <div class="fourth-line">
+                    <div class="div-inline">
+                        <label class="label-title">商品库存:</label>
+                        <input type="text" disabled="disabled" class="form-control" value={{curProduct.header.stock}} />
+                    </div>
+                </div>
+                <div class="div-uploadpic">
+                    <label>图片</label>
+                    <img src={{picUrl+curProduct.ProductHeader.cover+ '!small'}}>
+                </div>
+                <div class="remark-div">
+                    <label class="remark-title">备注:</label>
+                    <label class="label-value">{{curProduct.productHeader.des}}</label>
+                </div>
+            </div>
+        </div>
+    </script>
+</div>

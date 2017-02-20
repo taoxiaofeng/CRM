@@ -1,0 +1,17 @@
+.count {
+	top: 10px;
+	.btn{padding: 1px 6px;}
+    .count-num {
+        width: 60px;
+        height: 22px;
+        padding:6px;
+        text-align: center;
+    }
+}
+.active .count{
+	background-color: #ededed;
+    .btn{background-color: #ededed;}
+    .count-num {
+        background-color: #ededed;
+    }
+}

@@ -1,0 +1,81 @@
+<div class="modal-pick-order">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{'拣货单'+'-'+order.companyName+'-'+order.shelfName+'('+utilService.parseTimeByLong(order.createTime,'yyyyMMddhhmmss')+')'}}</h4>
+    </div>
+    <div class="modal-body form-inline">
+        <table id="pick-order-table" style="border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+        :14px;line-height: 1.42857143;">
+            <thead>
+                <tr>
+                    <th colspan="8" style="line-height: 40px;text-align: center;font-size: 18px;padding: 8px;border: 1px solid #ddd;font-weight: 400;">好品拣货单</th>
+                </tr>
+                <tr>
+                    <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">紧急度:<span style="{{order.urgent>0?'color:red':''}}">{{CONSTANTS.DELIVERY_URGENCY.DESC[order.urgent]}}</span></th>
+                </tr>
+                <tr>
+                    <th colspan="5" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">客户名称:{{order.companyName}}</th>
+                    <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">企业类型:{{CONSTANTS.COMPANY_TYPE.DESC[order.shelfType]}}</th>
+                </tr>
+                <tr>
+                    <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">客户地址:{{order.address}}</th>
+                </tr>
+                <tr>
+                    <th colspan="5" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">货架:{{order.shelfName}}</th>
+                    <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">是否新装货架:{{order.newShelf?'是':'否'}}</th>
+                </tr>
+                <tr>
+                    <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">拣货单创建人:{{order.creatorName}}</th>
+                </tr>
+                <tr>
+                    <th style="padding: 8px;border: 1px solid #ddd;">编号</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">仓位</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">商品编号</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">商品名称</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">上架原因</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">订单数量</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">销售单价(元)</th>
+                    <th style="padding: 8px;border: 1px solid #ddd;">金额(元)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in order.items|filter:filterItems">
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{$index+1}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"><span ng-repeat="position in product.positions">'{{position.name.toString()}}</br></span></td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{product.skuCode}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{product.productName}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">
+                        <!-- <div ng-if="product.suiteId!=0&&product.suiteId" style="display:inline-block;">
+                            <span style="color:red;font-size:18px;">&#x2665;
+                            </span>
+                            <span>({{product.suiteName.substr(0,1)}})</span>
+                        </div>
+                        <span ng-if="product.managerOrderId" style="color:red;">&#9751;</span> -->
+                        <span ng-repeat="reason in product.reasons">'{{CONSTANTS.PICK_PRODUCT_REASON.KEY_WORD[reason]}}</span>
+                    </td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{product.itemNum}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{product.price/100.0}}元</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{product.price*product.itemNum/100.0}}元</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="8" style="text-align: right;padding: 8px;border: 1px solid #ddd;">送货总价(人民币): {{order.orderFee/100.0}}元
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="8" style="padding: 8px;border: 1px solid #ddd;">
+                        <div>拣货单更新:</div>
+                        <div style="text-align:left;">{{utilService.parseTimeByLong(order.updateTime,'yyyy-MM-dd hh:mm:ss')}}</div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="exportExcelOnDetail()">导出Excel</button>
+        <button type="button" class="btn btn-warning" ng-click="openReturnReasonModal()">返回运营</button>
+        <button ng-if="order.orderState==DELIVERY_STATE.PICKING" type="button" class="btn btn-primary" ng-click="confirmPicking()">确认出库</button>
+        <button ng-if="order.orderState==DELIVERY_STATE.WAIT_PICK" type="button" class="btn btn-primary" ng-click="printPickOrder(this)">打印并开始拣货</button>
+    </div>
+</div>

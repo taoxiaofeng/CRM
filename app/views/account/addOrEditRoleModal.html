@@ -1,0 +1,18 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{ addRoleMode? "新增角色" : "编辑角色" }}</h3>
+  </div>
+  <div class="modal-body">
+    <!-- 角色名Input -->
+    <md-input-container style="height: 20px;">
+      <label for="name">角色名称: </label>
+      <input type="text" ng-model="result.name" required>
+    </md-input-container>
+    <permissions all="allPermissions" checked="result.permissionIds"></permissions>
+  </div>
+  <md-dialog-actions layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">取消</md-button>
+    <md-button class="md-primary" ng-click="ok()" ng-disabled="!result.name">确定</md-button>
+  </md-dialog-actions>
+</div>

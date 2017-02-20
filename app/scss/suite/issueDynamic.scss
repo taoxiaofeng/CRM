@@ -1,0 +1,47 @@
+.issueDynamic {
+  .header-view {
+    margin-bottom: 10px;
+    .remind {
+      float: left;
+      margin-left: 15px;
+      margin-bottom: 5px;
+      .remind-a {
+        font-size: 10px;
+        color: red;
+      }
+    }
+    .holiday-welfare-title {
+      text-align: center;
+    }
+    .query {
+      padding: 34px 15px 15px 0;
+      .issue-screening {
+        padding-left: 15px;
+        float: left;
+        .dropdown-toggle {
+          width: 160px;
+          float: left;
+        }
+      }
+      .input-starttime,
+      .input-endtime {
+        float: left;
+        width: 200px;
+      }
+      .separator {
+        float: left;
+        padding: 5px;
+      }
+      .btn-search {
+        float: left;
+        margin-left: 15px;
+      }
+      .btn-wrap {
+        .search-btn {
+          margin-left: 15px;
+          float: left;
+        }
+      }
+    }
+  }
+}

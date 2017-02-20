@@ -1,0 +1,82 @@
+<div class="modal-tea-order">
+ <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{teaDetail.name}}</h4>
+    </div>
+    <div class="modal-body form-inline delivery-order-table-wrap" id="tea-order-table">
+        <table id="delivery-order-table" style="width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+        :14px;line-height: 1.42857143;">
+            <thead>
+                <tr>
+                    <th colspan="10" style="line-height: 30px;text-align: center;font-size: 18px;padding: 4px;border: 1px solid #ddd;font-weight: 400;">下午茶订购单</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr>
+                <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购企业:{{teaDetail.order.companyName}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">企业地址 :{{teaDetail.address.addr}}</td>
+
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购人:{{teaDetail.address.contactName}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购人联系方式:{{teaDetail.address.contactPhone}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">下单时间:{{utilService.parseTimeByLong(teaDetail.order.createTime)}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">预约送货时间:{{teaDetail.order.deliveryTime|date : 'yyyy-MM-dd'}} {{teaDetail.order.timePeriod|desc:'Time_Period'}}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="10" style="line-height: 10px;text-align: center;font-size: 18px;padding: 4px;font-weight: 400;">&nbsp</th>
+                </tr>
+            </thead>
+            <tbody >
+                 <tr  >
+                    <th colspan="10" style="line-height: 20px;padding-top: 10px;">{{list.category.title}}</th>
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;">下午茶订单</td>
+                    <td colspan="3" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;border-left: none;">支付方式:{{teaDetail.order.payChannel|desc:'PAY_TYPE'}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-left: none;">订单总额:{{teaDetail.order.price|rmb}}</td>
+
+                </tr>
+            </tbody>
+
+            <tbody ng-repeat="list in teaDetail.itemListExts">
+                <tr  >
+                    <th colspan="10" style="line-height: 20px;padding-top: 10px;">{{list.category.title}}</th>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品编码</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品名称</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品价格</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购数量</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订单总额</td>
+
+                </tr>
+                  <tr ng-repeat="item in list.itemList">
+                  <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{"\'"+item.productId}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.title}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.price|rmb}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.itemNum}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.price*item.itemNum|rmb}}</td>
+                  </tr>
+            </tbody>
+
+                <tr>
+                    <td colspan="10"><textarea name="" id="" cols="30" rows="3" width='100%' style='display: inline-block; width: 100%;margin-top: 20px' ng-keypress="keyremark($event,teaDetail.order.remark,teaDetail.order.id)" ng-model="teaDetail.order.remark" disabled="true">{{teaDetail.order.remark}}</textarea> </td>
+                </tr>
+
+        </table>
+
+    </div>
+    <div class="modal-footer" ng-if="!isPrint">
+        <a ng-href="{{uri}}" download="{{deliveryOrder.name+'.xls'}}" target="_blank" ng-click="exportExcelOnDetail(ORDER_TYPE.TEAORDER,this)">
+            <button type="button" class="btn btn-primary">导出Excel</button>
+        </a>
+         <button type="button" class="btn btn-warning" ng-click="printTeaHtml(ORDER_TYPE.TEAORDER)">打印</button>
+         <button type="button" class="btn btn-success" ng-click="cancelOrder(teaDetail.order.id)" ng-if='teaDetail.order.type==Tea_Period_Type.WAIT'>取消订单</button>
+         <button type="button" class="btn btn-danger " ng-click="acceptOrder(teaDetail.order.id)" ng-if='teaDetail.order.type==Tea_Period_Type.WAIT'>接收订单</button>
+    </div>
+</div>

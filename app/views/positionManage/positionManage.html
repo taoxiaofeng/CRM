@@ -1,0 +1,89 @@
+<div ng-controller="positionManageCtrl" class="position-manage container-fluid">
+    <div class="header-view">
+        <button class="btn btn-default btn-createpositon" ng-click="openPositionEditModal('create')">新增仓位</button>
+    </div>
+    <br/>
+    <div class="one-table">
+        <table ng-table="positionTable" class="table table-condensed table-bordered table-hover table-mini ngtable table-position">
+            <thead>
+            <th>排</th>
+            <th>层</th>
+            <th>位</th>
+            <th>
+                <sort-button title="仓位编号" asc-sort-code=2 sort-callback="sortByName(item)"></sort-button>
+            </th>
+            <th>是否空仓</th>
+            <th>编辑</th>
+            </thead>
+            <tr ng-repeat="position in $data">
+                <td>{{position.row}}</td>
+                <td>{{position.layer}}</td>
+                <td>{{position.location}}</td>
+                <td>{{position.name}}</td>
+                <td>{{position.isEmpty?'是':'否'}}</td>
+                <td>
+                    <button class="btn btn-default btn-sm" ng-click="openPositionEditModal('edit',position)"><span class="glyphicon glyphicon-pencil"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="two-table">
+        <table ng-table="positionTable" class="table table-condensed table-bordered table-hover table-mini ngtable table-position">
+            <thead>
+            <th>排</th>
+            <th>层</th>
+            <th>位</th>
+            <th>
+                <sort-button title="仓位编号" asc-sort-code=2 sort-callback="sortByName(item)"></sort-button>
+            </th>
+            <th>是否空仓</th>
+            <th>编辑</th>
+            </thead>
+            <tr ng-repeat="position in $data">
+                <td>{{position.row}}</td>
+                <td>{{position.layer}}</td>
+                <td>{{position.location}}</td>
+                <td>{{position.name}}</td>
+                <td>{{position.isEmpty?'是':'否'}}</td>
+                <td>
+                    <button class="btn btn-default btn-sm" ng-click="openPositionEditModal('edit',position)"><span class="glyphicon glyphicon-pencil"></span></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/ng-template" id="positionEditModal">
+        <form class="modal-position-edit" ng-submit="submitPositionEdit(position)">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新增仓位</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <div>
+                    <span class="line-title">排</span>
+                    <div class="line-value">
+                        <input type="text" class="form-control input-shelfname" onkeyup="value=value.replace(/[^\d]/g,'')" required ng-model="position.row" />
+                        <span class="line-tip">3位整数 如:001</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="line-title">层</span>
+                    <div class="line-value">
+                        <input type="text" class="form-control input-shelfname" onkeyup="value=value.replace(/[^\d]/g,'')" required ng-model="position.layer" />
+                        <span class="line-tip">2位整数 如:01</span>
+                    </div>
+                </div>
+                <div>
+                    <span class="line-title">位置</span>
+                    <div class="line-value">
+                        <input type="text" class="form-control input-shelfname" onkeyup="value=value.replace(/[^\d]/g,'')" required ng-model="position.location" />
+                        <span class="line-tip">3位整数 如:001</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </form>
+    </script>
+</div>

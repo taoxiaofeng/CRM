@@ -1,0 +1,6 @@
+<div >
+    <input type="text" ng-model="productName" class="form-control col-md-6" uib-typeahead="state as state.header.productName for state in getTypeHeadOptions($viewValue) | limitTo:5" ng-model-options="typeHeadConfigs" ng-change="changeValue(product)" typeahead-loading="loadingOptions" typeahead-on-select="selectTypeHeadOptions($item)" typeahead-no-results="noResults" name="companySearch" placeholder="根据商品名称添加名称搜索" />
+    <div class="col-md-6 company-selection hide">
+        <span class="col-md-12 text-primary option"></span>
+    </div>
+</div>

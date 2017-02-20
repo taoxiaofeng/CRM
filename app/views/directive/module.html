@@ -1,0 +1,12 @@
+<div class="module">
+    <div class="module-wrap {{module.className}} {{template?'':'hasborder'}}">
+        <table style="width:100%;height:100%">
+            <tr ng-repeat="x in row">
+                <td ng-repeat="y in col">
+                    <div ng-if="hasContent(y,x)" ng-click="editContent(moduleIndex,y,x)" class="content  {{template?'in-template':''}}" ng-style="renderStyle">
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

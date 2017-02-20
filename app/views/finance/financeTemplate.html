@@ -1,0 +1,72 @@
+<div class="finance-template">
+    <table ng-table-dynamic="financeTable with financeHeads"
+           class="table table-striped table-bordered  table-mini table-responsive-vertical finance-table"
+           style="text-align: center;" id="finance-table">
+        <thead>
+        <th>序号</th>
+        <th>
+            <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1"
+                   ng-click="selectAllOrder($event,$data)"/>
+            <label for="checkbox_all"></label>
+        </th>
+        <th>生成时间</th>
+        <th>更新时间</th>
+        <th>公司名称</th>
+        <th>公司应付款（元）</th>
+        <th>实际到账(元)</th>
+        <th>结算人</th>
+        <th>
+            <drop-down list={{orderStateList}} desc-field='desc' prevent-auto-selected="true"
+                       default-item={{orderStateList[0]}} btn-style="btn-link"
+                       select="selectOrderState(item)"></drop-down>
+        </th>
+        <th>
+            <drop-down list={{invoiceNeedStateList}} desc-field='desc' prevent-auto-selected="true"
+                       default-item={{invoiceNeedStateList[0]}} btn-style="btn-link"
+                       select="selectInvoiceNeedState(item)"></drop-down>
+        </th>
+        <th>
+            <drop-down list={{invoiceStateList}} desc-field='desc' prevent-auto-selected="true"
+                       default-item={{invoiceStateList[0]}} btn-style="btn-link"
+                       select="selectInvoiceState(item)"></drop-down>
+        </th>
+        <th>操作</th>
+        </thead>
+        <tr ng-repeat="x in $data" ng-init="index = $index">
+            <!--<td>
+                <input type="checkbox" ng-model="x.selected" />
+            </td>-->
+            <td>{{x.index}}</td>
+            <td>
+                <input type="checkbox" ng-model="order.checked" id="{{'checkbox_'+x.id}}" class="chk_1"
+                       ng-click="updateSelection($event,x)"/>
+                <label for="{{'checkbox_'+x.id}}"></label>
+            </td>
+            <td>{{x.createTime|date:'yyyy.MM.dd HH:mm:ss'}}</td>
+            <td>{{x.updateTime|date:'yyyy.MM.dd HH:mm:ss'}}</td>
+            <td>{{x.companyName}}</td>
+            <td>{{x.orderFee|rmb}}</td>
+            <td>{{x.receiveFee|rmb}}</td>
+            <td>{{x.creatorName}}</td>
+            <td>{{x.orderState|desc:'SETTLEMENT_STATE'}}</td>
+            <td>{{x.isInvoice|desc:'INVOICE_NEED_STATE'}}</td>
+            <td>{{x.invoiceNum||'-'}}</td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="openFinanceDetail(x)"><span
+                        class="glyphicon glyphicon-list-alt"></span></button>
+                &nbsp&nbsp&nbsp
+                <button class="btn btn-default btn-sm" ng-click="exportExcel(x)"><span
+                        class="glyphicon glyphicon-save"></span></button>
+            </td>
+        </tr>
+        <!--         <tr ng-repeat="x in $data" ng-init="index = $index">
+            <td ng-repeat="y in $columns" data-title="{{y.title()}}" ng-class="{{x[y.field].cls}}" compile-html="y.getValue&&y.getValue(x[y.field],x,index,this,y)||x[y.field]">
+            </td>
+        </tr> -->
+        <tfoot ng-if="!finances.length">
+        <td colspan="100%">
+            <h5 class="no-data">无数据</h5>
+        </td>
+        </tfoot>
+    </table>
+</div>

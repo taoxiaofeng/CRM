@@ -1,0 +1,146 @@
+<div class="modal-holiday-order" id="">
+    <div class="modal-header" style="border-bottom: 0">
+        <button type="button" style="width: 50px;height: 20px;position:absolute; right:10px;z-index: 1000000"
+                class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{order.name}}</h4>
+    </div>
+    <div class="modal-body form-inline" id="holiday-welfare-order-detail-table">
+        <table  style="border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+		        :14px;line-height: 1.42857143;">
+            <thead>
+            <tr>
+                <th colspan="6"
+                    style="line-height: 40px;text-align: center;font-size: 18px;padding: 8px;border: 1px solid #ddd;font-weight: 400;">
+                    {{order.order.eventTitle}}<span
+                        style="line-height: 40px;text-align: center;font-size: 12px;color: red;padding: 8px 8px 8px 24px;font-weight: 200;float: right">{{ORDER_STATUS.DESC[order.order.status]||'-'}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">购买类型: <span
+                        style="padding: 8px;font-weight: 200;">{{BUY_TYPE.DESC[order.order.eventType]}}</span></th>
+            </tr>
+            <tr>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    订购企业: {{order.order.companyName}}
+                </th>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    企业地址: {{order.address.addr}}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    订购人: {{order.address.contactName}}
+                </th>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    订购人联系方式: {{order.address.contactPhone}}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    下单时间: {{(order.address.createTime | date: "yyyy-MM-dd HH:mm:ss")}}
+                </th>
+                <th colspan="3" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: left;">
+                    预约送货时间: {{(order.address.updateTime | date: "yyyy-MM-dd HH:mm:ss")}}
+                </th>
+            </tr>
+            <tr>
+                <th colspan="6" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">节假日订购单金额: <span
+                        style="padding: 8px;font-weight: 200;color: red; float: right">{{order.order.price/100}}</span></th>
+            </tr>
+            <tr>
+                <th colspan="6" style="text-align: center;padding: 8px;border: 1px solid #ddd;font-weight: 400;">订购清单
+                </th>
+            </tr>
+            <tr>
+                <th style="padding: 8px;border: 1px solid #ddd;">商品编码</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">商品名称</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">商品价格</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">订购数量</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">订购总额</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--<tr>
+                <td data-title="编号" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{$index+1}}</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">苹果</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">4.44元</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">10箱</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">44.4元</td>
+            </tr>-->
+            <tr ng-repeat="product in order.orderItems">
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"> {{"'"+product.id}}</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"> {{product.productTitle}}</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"> {{product.price/100}}元</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"> {{product.itemNum}}</td>
+                <td style="padding: 8px;border: 1px solid #ddd;text-align: left;"> {{((product.price / 100) *
+                    product.itemNum).toFixed(2)}}
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th colspan="6" style="text-align: center;padding: 8px;border: 1px solid #ddd;font-weight: 400;">开票信息
+                </th>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">发票抬头: {{order.invoice.title}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">公司地址: {{order.invoice.addr}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">收件人姓名: {{order.invoice.contactName}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">收件人联系方式: {{order.invoice.contactPhone}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">快递公司: {{order.invoice.detailAddr}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" style="padding: 8px;border: 1px solid #ddd;">备注: {{order.order.remark}}
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <!--  <label><span class="note-one">备注:</span></label>
+          <textarea style="width: 100%" type="text"
+                    name="notes"
+                    class="form-control note-name"
+                    placeholder="请输入备注信息......"
+                    ng-model="order.notes"
+          ></textarea>-->
+    </div>
+    <div class="modal-footer" ng-if="!isPrint">
+        <button type="button" class="btn btn-default" ng-click="holidayWelfareDetailPrint(ORDER_TYPE.HOLIDAY)"><span>打印</span></button>
+        <a ng-href="{{uri}}" download="{{order.name+'.xls'}}" target="_blank" ng-click="exportExcelOnDetail()">
+            <button type="button" class="btn btn-default">导出Excel</button>
+        </a>
+        <button ng-if="order.order.status==ORDER_STATUS.WAITING_PAYMENT" type="button"
+                class="btn btn-warning" ng-click="cacelOrder(order)">取消此单
+        </button>
+        <button ng-if="(order.order.status!=ORDER_STATUS.COMPLETE&&order.order.status!=ORDER_STATUS.CANCEL)" type="button"
+                class="btn btn-primary ng-scope"
+                ng-click="modifyOrderStatus(order)">{{primaryBtnTexts[order.order.status]}}
+        </button>
+        <!--微信支付 屏蔽待收货款按钮-->
+        <!--<button ng-if="(order.order.status==ORDER_STATUS.WAITING_PAYMENT&&order.order.payChannel==PAYMENT_STATUS.BANK_CARD)||order.order.status==ORDER_STATUS.WAITING_DISTRIBUTION" type="button"
+                class="btn btn-primary ng-scope"
+                ng-click="modifyOrderStatus(order)">{{primaryBtnTexts[order.order.status]}}
+        </button>-->
+        <!--<button ng-if="!payment"  type="button"-->
+        <!--class="btn btn-primary ng-scope"-->
+        <!--ng-click="_receivePayment(order)">收到款项-->
+        <!--</button>-->
+        <!--<button ng-if="order.order.status==3||order.order.status==4||payment"  type="button"-->
+        <!--class="btn btn-primary ng-scope" id="completeDeliveryButton"-->
+        <!--ng-click="_completeDelivery(order)">️完成配送-->
+        <!--</button>-->
+
+    </div>
+</div>

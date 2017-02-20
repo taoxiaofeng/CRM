@@ -1,0 +1,114 @@
+<div class="modal-tea-order">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{{promotionDetail.name}}</h4>
+    </div>
+    <div class="modal-body form-inline promotion-order-table-wrap" id="promotion-order-table">
+        <table id="promotion-order-table" style="width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+        :14px;line-height: 1.42857143;">
+            <thead>
+                <tr>
+                    <th colspan="10" style="line-height: 30px;text-align: center;font-size: 18px;padding: 4px;border: 1px solid #ddd;font-weight: 400;">营销订购单</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购企业:{{promotionDetail.order.companyName}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">企业地址 :{{promotionDetail.address.addr}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购人:{{promotionDetail.address.contactName}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购人联系方式:{{promotionDetail.address.contactPhone}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">下单时间:{{utilService.parseTimeByLong(promotionDetail.order.createTime)}}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">预约送货时间:{{promotionDetail.order.deliveryTime?(promotionDetail.order.deliveryTime|date : 'yyyy-MM-dd'):""}} </td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="10" style="line-height: 10px;text-align: center;font-size: 18px;padding: 4px;font-weight: 400;">&nbsp</th>
+                </tr>
+            </thead>
+            <tbody ng-if='(promotionDetail.order.payType==1)&&(promotionDetail.order.status>=PROMOTION_ORDER_STATUS.WAIT_PAY_FULL)'>
+                <tr>
+                    <td colspan="4" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;">营销商品订单</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;border-left: none;">已付定金:{{promotionDetail.order.deposit|rmb}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-left: none;border-right: none;">订单金额:{{promotionDetail.order.price|rmb}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-left: none;">实际收款:{{promotionDetail.order.actualPrice}}</td>
+                </tr>
+            </tbody>
+             <tbody ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_COMFIRM'>
+                <tr>
+                    <td colspan="8" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;">营销商品订单</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;border-left: none;">已付定金:{{promotionDetail.order.deposit|rmb}}</td>
+                   
+                </tr>
+            </tbody>
+             <tbody ng-if='promotionDetail.order.payType==2'>
+                <tr>
+                    <td colspan="8" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;">营销商品订单</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-left: none;border-right: none;">订单金额:{{promotionDetail.order.price|rmb}}</td>
+                  
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品编码</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品名称</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">商品价格</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订购数量</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">订单总额</td>
+                </tr>
+                <tr ng-repeat="item in promotionDetail.orderItems">
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{"\'"+item.productSku}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.productTitle}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{item.price|rmb}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{promotionDetail.order.status > PROMOTION_ORDER_STATUS.WAIT_COMFIRM?item.itemNum:'-'}}</td>
+                    <td colspan="2" style="padding: 4px;border: 1px solid #ddd;text-align: left;">{{(promotionDetail.order.status > PROMOTION_ORDER_STATUS.WAIT_COMFIRM?item.price*item.itemNum:'-')|rmb}}</td>
+                </tr>
+            </tbody>
+            <tbody ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.SEND'>
+                <tr>
+                    <th colspan="10" style="line-height: 10px;text-align: center;font-size: 18px;padding: 4px;font-weight: 400;">&nbsp</th>
+                </tr>
+                <tr>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;">快递方式：{{promotionDetail.order.expressType }}</td>
+                    <td colspan="5" style="padding: 4px;border: 1px solid #ddd;text-align: left;border-right: none;border-left: none;">快递单号:{{promotionDetail.order.expressId}}</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td colspan="10">
+                    <textarea name="" id="" cols="30" rows="3" width='100%' style='display: inline-block; width: 100%;margin-top: 20px' ng-keypress="keyremark($event,promotionDetail.order.remark,promotionDetail.order.id)" ng-model="promotionDetail.order.cnotes" disabled="true" placeholder='用户订单备注'></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10">
+                    <textarea name="" id="" cols="30" rows="3" width='100%' style='display: inline-block; width: 100%;margin-top: 20px' ng-model="promotionDetail.order.crmNotes" disabled="true" placeholder='管理员订单备注'></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="modal-footer" ng-if="!isPrint">
+        <a ng-href="{{uri}}" download="{{promotionDetail.name+'.xls'}}" target="_blank" ng-click="exportExcelOnDetail(ORDER_TYPE.PROMOTION,this)">
+            <button type="button" class="btn btn-primary">导出Excel</button>
+        </a>
+        <button type="button" class="btn btn-warning" ng-click="printTeaHtml(ORDER_TYPE.PROMOTION)">打印</button>
+
+
+
+        <button type="button" class="btn btn-danger" ng-click="cacelOrder(promotionDetail)" ng-if='promotionDetail.order.status<PROMOTION_ORDER_STATUS.CANCEL'>取消订单</button>
+
+        <button type="button" class="btn btn-success" ng-click="confirmAndEditOrder(promotionDetail,this)" ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_COMFIRM'>确认订单</button>
+ 
+        <button type="button" class="btn btn-success" ng-click="confirmAndEditOrder(promotionDetail)" ng-if='(promotionDetail.order.payType==1)&&(promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_PAY_FULL||promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_SEND)'>修改订单</button>
+
+        <button type="button" class="btn btn-success" ng-click="payFullOrder(promotionDetail)" ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_PAY_FULL'>确认付款</button>
+
+        <button type="button" class="btn btn-success" ng-click="sendOrder(promotionDetail)" ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.WAIT_SEND'>发货</button>
+
+        <button type="button" class="btn btn-success" ng-click="receiveOrder(promotionDetail)" ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.SEND'>收货</button>
+
+        <button type="button" class="btn btn-danger" ng-click="refundOrder(promotionDetail)" ng-if='promotionDetail.order.status==PROMOTION_ORDER_STATUS.CANCEL_8'>退款</button>
+    </div>
+</div>

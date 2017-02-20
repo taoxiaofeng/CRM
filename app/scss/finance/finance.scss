@@ -1,0 +1,51 @@
+.finance {
+    /*div.ng-table-pager.ng-scope {
+    position: absolute;
+    bottom: 0;;
+  }
+  table {
+    table-layout: fixed;
+    word-break: break-all;
+    text-align: center;
+  }*/
+    .header-view {
+        .query-company {
+            width: 300px;
+        }
+    }
+    .finance-table {
+        margin-top: 10px;
+        margin-bottom: 0;
+        th {
+            vertical-align: middle;
+        }
+    }
+    .note-name {
+        width: 100%;
+    }
+    .chk_1 {
+        display: none;
+    }
+    .hidden {
+        display: none;
+        visibility: hidden;
+    }
+    /*.one-table {
+    overflow: scroll;
+    overflow-x: hidden;
+    tbody {
+      display: none;
+    }
+  }
+  .two-table {
+    width: 100%;
+    height: 750px;
+    overflow: scroll;
+    .finance-table-two {
+      text-align: center;
+      thead {
+        display: none;
+      }
+    }
+  }*/
+}

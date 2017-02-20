@@ -1,0 +1,41 @@
+<div ng-controller="goodsChooseHistoryCtrl" class="goods-choose-history container-fluid">
+    <div class="header-wrap">
+        <company-searcher select-company="searchByCompany(company)" empty-callback="emptyCompanySearch()"></company-searcher>
+        <span class="time-select-title">选购时间:</span>
+        <input type="date" class="input-starttime" placeholder="开始时间" ng-model="queryParams.startTime" />-
+        <input type="date" class="input-endtime" placeholder="结束时间" ng-model="queryParams.endTime" />
+        <button class="btn btn-default btn-search" ng-click="setOrderTable()">查询</button>
+        <div class="right-wrap">
+            <a href="#goodsChooseOrder">
+                <button class="btn btn-default btn-batch-print">返回</button>
+            </a>
+        </div>
+    </div>
+    <table ng-table="orderTable" class="table table-condensed table-bordered table-hover ngtable table-orders">
+        <thead>
+            <th>选购时间</th>
+            <th>更新时间</th>
+            <th>操作人</th>
+            <th>客户名称</th>
+            <th>类型</th>
+            <th>状态</th>
+            <th>查看明细</th>
+            <th>操作</th>
+        </thead>
+        <tr ng-repeat="order in $data">
+            <td>{{order.createTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <td>{{order.updateTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <td>{{order.verifyName}}</td>
+            <td>{{order.companyName}}</td>
+            <td>{{COMPANY_TYPE.DESC[order.orderType]}}</td>
+            <td>{{ORDER_STATE.DESC[order.orderState]}}</td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="checkOrderDetail(order)"><span class="glyphicon glyphicon-list-alt"></span></button>
+            </td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="exportExcelOnList(order)"><span class="glyphicon glyphicon-save"></span></button>
+            </td>
+        </tr>
+    </table>
+    <div id="exportExcelWrap" class="hidden"></div>
+</div>

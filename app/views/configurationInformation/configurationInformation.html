@@ -1,0 +1,87 @@
+<div ng-controller="configurationInformation" class="configurationInformation" id="configurationInformation">
+    <uib-tabset active="activeJustified" justified="true" class="info-cfg">
+        <uib-tab index="0" heading="零花钱基数配置" class="pocket-money-info">
+            <div class="pocketMoneyAudit">
+                <div class="form-group configuration">
+                    <div class="input-group pocket-money">
+                        <div class="input-group-addon">零花钱审核基数: ≥</div>
+                        <input class="form-control review-base" type="text" placeholder="零花钱审核基数" ng-model="totalFee" model-format="rmb">
+                    </div>
+                    <button class="btn btn-primary btn-ook" type="button" ng-click="pocketMoneyAudit(totalFee)">确定
+                    </button>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="1" heading="心愿单时效配置" class="Wish-list-info">
+            <div ng-controller="configurationInformation" class="configurationInformation container-fluid">
+                <div class="form-group aging-list">
+                    <div class="input-group-addon Wish-list-aging"><span class="aging-title">心愿单上架标识显示时效配置:</span></div>
+                    <div class="btn-group drow-down dropdown  btn-WishAgingList">
+                        <drop-down btn-style="btn btn-default dropdown-toggle" list={{showTimeList.showTimeArr}} default-item="{{showTimeList.getDefaultItem(showTime)}}" prevent-auto-selected=true desc-field="name" select="showTimeList.wishListLimitation(item)">
+                        </drop-down>
+                        <!--default-desc='无'-->
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="2" heading="节假日活动配置" class="holiday-welfare-info">
+            <div class="holiday-welfare">
+                <form class="set-welfare-time">
+                    <div class="input-group scheduled">
+                        <div class="input-group-addon scheduled-time">预定时间:</div>
+                        <date-picker time-stamp="welfareTime.scheduledTimeDate"></date-picker>
+                    </div>
+                    <div class="hours-show" ng-model="welfareTime.scheduledTime" uib-timepicker ng-change="changed()" hour-step="1" minute-step="15" show-meridian="false"></div>
+                    <div class="input-group selling">
+                        <div class="input-group-addon selling-time">热卖时间:</div>
+                        <date-picker time-stamp="welfareTime.sellingTimeDate"></date-picker>
+                    </div>
+                    <div class="hours-show" ng-model="welfareTime.sellingTime" uib-timepicker ng-change="changed()" hour-step="1" minute-step="15" show-meridian="false"></div>
+                    <div class="input-group over">
+                        <div class="input-group-addon over-time">结束时间:</div>
+                        <date-picker time-stamp="welfareTime.overTimeDate"></date-picker>
+                    </div>
+                    <div class="hours-show" ng-model="welfareTime.overTime" uib-timepicker ng-change="changed()" hour-step="1" minute-step="15" show-meridian="false"></div>
+                    <button class="btn btn-primary btn-okTime" ng-click="setWelfareTime(weclfareTime)"><span>确定</span>
+                    </button>
+                </form>
+            </div>
+        </uib-tab>
+        <uib-tab index="3" heading="营销商品/组合定金额度" class="marketing-activities-deposit-info">
+            <div class="marketing-activities-deposit">
+                <div class="input-group activities-deposit">
+                    <div class="input-group-addon">营销商品/组合定金额度=</div>
+                    <input class="form-control review-base" type="text" placeholder="营销商品/组合定金额度" ng-model="depositAmount" model-format="rmb">
+                </div>
+                <button class="btn btn-primary btn-ook" type="button" c ng-click="marketingActivitiesDeposit(depositAmount)">确定
+                </button>
+            </div>
+        </uib-tab>
+        <uib-tab index="4" heading="选购单选购上限配置" class="choose-order-info">
+            <div class="choose-order">
+                <div class="input-group one-shelf">
+                    <div class="input-group-addon">一个货架,企业选购上限</div>
+                    <input class="form-control review-base" type="text" placeholder="请输入上限值" ng-model="limitNumConfig.oneShelf.limitNum">
+                </div>
+                <div class="input-group two-shelf">
+                    <div class="input-group-addon">二个货架,企业选购上限</div>
+                    <input class="form-control review-base" type="text" placeholder="请输入上限值" ng-model="limitNumConfig.twoShelf.limitNum">
+                </div>
+                <div class="input-group three-shelf">
+                    <div class="input-group-addon">三个货架,企业选购上限</div>
+                    <input class="form-control review-base" type="text" placeholder="请输入上限值" ng-model="limitNumConfig.threeShelf.limitNum">
+                </div>
+                <div class="input-group four-shelf">
+                    <div class="input-group-addon">四个货架,企业选购上限</div>
+                    <input class="form-control review-base" type="text" placeholder="请输入上限值" ng-model="limitNumConfig.fourShelf.limitNum">
+                </div>
+                <div class="input-group all-shelf">
+                    <div class="input-group-addon">五个及以上货架,企业选购上限</div>
+                    <input class="form-control review-base" type="text" placeholder="请输入上限值" ng-model="limitNumConfig.allShelf.limitNum">
+                </div>
+                <button class="btn btn-primary btn-ook" type="button" ng-click="chooseOrderInfo(limitNumConfig)">确定
+                </button>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+</div>

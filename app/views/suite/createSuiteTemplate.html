@@ -1,0 +1,108 @@
+<div class="modal-suite-dynamic">
+    <div class="modal-header" style="border-bottom: 0;">
+        <button type="button" style="width: 50px;height: 20px;position: absolute;right: 10px;z-index: 1000000"
+                class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">创建套餐</h4>
+    </div>
+    <form class="modal-body" autocomplete="off">
+        <div class="form-group" ng-disabled="disableEdit">
+            <!--<label class="suite-label" style="float:left;">banner:</label>-->
+            <span class="input-group-addon" style="float: left; width: 100px; height: 34px;line-height: 20px;">banner:</span>
+            <uploader class="suite-banner" index="$index" value="cSuite.banner" ng-model="cSuite.banner"
+                      path="cSuite" size-limit="{{imgSizeLimit}}">
+            </uploader>
+            <img style="width:100px;margin-top:10px" class="{{cSuite.banner?'':'hide'}}"
+                 ng-click="showBigImage(cSuite.banner)" src="{{imgPrefix+cSuite.banner}}"/>
+        </div>
+        <div class="form-group" >
+            <div class="uploader-head">
+                <label style="float: left; width: 100px; height: 34px;line-height: 34px;">上传图片:</label>
+                <uploader style="float: left;margin-left: 0;margin-bottom: 5px;" index="1" value="product.cover" ng-model="product.cover" path="product" upload-title="添加图片" hide-input=true did-upload="didUploadImg(file,1)" size-limit="{{imgSizeLimit}}">
+                </uploader>
+                <span class="warn-tip" style="font-size: 14px;color: red;">*限制上传宽度为750px，高度不限的图片。</span>
+            </div>
+            <table ng-table="imgTableParams" class="table table-condensed table-bordered table-hover ngtable  account-table table-mini">
+                <tr ng-repeat="img in images.imgDetails">
+                    <td data-title="'序号'">
+                        <input type="number" ng-model="img.index" ng-change="sortImgs(1)" />
+                    </td>
+                    <td data-title="'图片大小'">{{utilService.parseKByBytes(img.file_size)+'k'}}</td>
+                    <td data-title="'尺寸'">{{img.image_width+'*'+img.image_height}}</td>
+                    <td data-title="'预览'"><img style="width: 32px;" src="{{picUrl+img.path}}" ng-click="imgPreview(img)" /></td>
+                    <td data-title="'操作'">
+                        <button class="btn btn-link btn-sm" ng-disabled="disableEdit" ng-click="deleteImg($index,1)">删除
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <div class="clear-both"></div>
+        </div>
+        <div class="form-group">
+            <label class="suite-label" style="float: left;">套餐类型:<span
+                    style="width:12px;height: 12px;color: red">*</span></label>
+            <label>
+                <input type="checkbox" value="" checked="" ng-model="cSuite.features" ng-disabled="disableEdit"/>特色
+            </label>
+            <label>
+                <input type="checkbox" value="" checked="" ng-model="cSuite.standard" ng-disabled="disableEdit"/>标准
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="suite-label" style="float: left;">主标题:</label>
+            <input type="text" class="form-control" ng-model="cSuite.title" ng-disabled="disableEdit"/>
+        </div>
+        <div class="form-group">
+            <label class="suite-label" style="float: left;">文章:</label>
+            <textarea type="text" autocomplete="off"
+                      class="form-control"
+                      placeholder="多行输入......" ng-model="cSuite.des" ng-disabled="disableEdit"></textarea>
+        </div>
+        <div class="form-group" ng-class="{'has-error' : ''}">
+            <span class="input-group-addon" style="float: left; width: 100px; height: 34px;line-height: 34px;line-height: 20px;">添加商品:</span>
+            <input type="text"
+                   autocomplete="off"
+                   name="addSku"
+                   class="form-control add-sku"
+                   placeholder="请输入商品编号"
+            ng-model="addProduct.skuCode"/>
+            <button class="btn btn-primary addTagsType"
+                    ng-click="addBySkuCode(addProduct)" ng-disabled="disableEdit">新增
+            </button>
+        </div>
+        <div class="createIssue" style="height: 150px; overflow:scroll;">
+            <table  ng-table="productTable" style="text-align: center; border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+		        :14px;line-height: 1.42857143;">
+                <thead>
+                <tr>
+                    <th colspan="1" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;text-align: center;">商品编号</th>
+                    <th colspan="1" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">商品名字</th>
+                    <th colspan="1" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">库存数量</th>
+                    <th colspan="1" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--<tr ng-repeat="iss in q.suites track by $index">-->
+                <tr ng-repeat="product in $data track by $index">
+                    <td style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">{{product.header.skuCode}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">{{product.header.productName}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">{{product.header.stock}}</td>
+                    <td style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">
+                        <button class="btn btn-danger btn-sm" href="javascript:;"
+                                ng-click="_deleteProduct($index)" ng-disabled="disableEdit"><span class="glyphicon glyphicon-trash"></span>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <input type="checkbox" ng-model="cSuite.showProducts" ng-disabled="disableEdit"/>不显示商品信息
+        </div>
+    </form>
+</div>
+<div class="modal-footer" ng-if="!isPrint">
+    <button type="button" class="btn btn-default" ng-click="saveSuite(cSuite)" ng-disabled="disableEdit">
+        <span>保存</span></button>
+    <!--<button type="button" class="btn btn-primary" ng-click=""><span>订单完成(特殊处理)</span></button>-->
+</div>
+</div>

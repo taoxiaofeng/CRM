@@ -1,0 +1,35 @@
+<table id="export-company-table" style="border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+        :14px;line-height: 1.42857143;">
+    <thead>
+        <tr>
+            <th style="padding: 8px;border: 1px solid #ddd;">序号</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">创建时间</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">客户编码</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">客户名称</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">货架类型</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">客户类别</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">企业状态</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">联系人</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">联系电话</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">座机</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">送货地址</th>
+            <th style="padding: 8px;border: 1px solid #ddd;">跟进人</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="company in selectedCompanyList">
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{$index+1}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.createTime|date:'yyyy.MM.dd'}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">'{{company.companyId}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.companyName}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.shelfTypeAlias}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{CONSTANTS.CUSTOMER_TYPE.DESC[company.customerType]}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{CONSTANTS.CUSTOMER_STATUS.DESC[company.status]}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.lastContact.contactName}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.lastContact.mobile}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.lastContact.tel}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.address}}</td>
+            <td style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{company.followPeople}}</td>
+        </tr>
+    </tbody>
+</table>

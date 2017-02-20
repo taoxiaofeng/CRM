@@ -1,0 +1,104 @@
+$SpitLine:1px solid #D8D8D8;
+
+/*导航条*/
+
+$sidebarWidth:200px;
+$sidebarFoldedWidth:50px;
+
+/*颜色*/
+
+$white-color:#fff;
+$dark-red-color:#B13621;
+
+/**/
+
+@mixin display-flex {
+    display: inline-block;
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($value:1) {
+    @include prefixer(box-flex, $value, webkit moz spec);
+    @include prefixer(flex, $value, webkit moz spec ms);
+}
+
+@mixin flex-direction($value: row) {
+    // Alt values.
+    $alt-value: $value;
+    @if $value=="row" {
+        $alt-value: horizontal;
+    }
+    @else if $value=="column" {
+        $alt-value: vertical;
+    }
+    // 2009
+    @include prefixer(box-orient, $alt-value, webkit moz spec);
+    // 2012
+    @include prefixer(flex-direction, $value, webkit moz ms o spec);
+    // 2011 (IE 10)
+    -ms-flex-pack: $alt-value;
+}
+
+@mixin flex-align-center {
+    @include prefixer(justify-content, center, webkit moz o ms spec);
+    @include prefixer(box-pack, center, webkit moz o ms spec);
+    @inlcude prefixer(-ms-flex-pack, center, webkit moz o ms spec);
+}
+
+@mixin justify-content($value: flex-start) {
+    // Alt values.
+    $alt-value: $value;
+    @if $value=="flex-start" {
+        $alt-value: start;
+    }
+    @else if $value=="flex-end" {
+        $alt-value: end;
+    }
+    @else if $value=="space-between" {
+        $alt-value: justify;
+    }
+    @else if $value=="space-around" {
+        $alt-value: distribute;
+    }
+    // 2009
+    @include prefixer(box-pack, $alt-value, webkit moz spec);
+    // 2012
+    @include prefixer(justify-content, $value, webkit moz ms o spec);
+    // 2011 (IE 10)
+    -ms-flex-pack: $alt-value;
+}
+
+@mixin border-color-gradient {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+@mixin borde-color-gradient-blue {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    &:hover {
+        border-color: #2196f3;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+}
+
+
+/*下拉框组件样式*/
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow: scroll;
+    overflow-x: hidden;
+}

@@ -1,0 +1,32 @@
+.shelves-patrol {
+    width: 100%;
+    height: 100%;
+    .warning-condition {}
+    .goods-inventory {
+        width: 70px;
+    }
+    .shelves-state,
+    .warning-number,
+    .input-group-addon,
+    .replenishment-time {
+        width: 150px;
+    }
+    .day {
+        width: 100px;
+    }
+    .paging {
+        text-align: center;
+    }
+    .companyName {
+        cursor: pointer;
+    }
+    .patroltabel{
+        margin-top: 10px;
+    }
+    .filter-form{
+        margin:15px 0;
+    }
+    .filter-wrap{
+        height: 100%;
+    }
+}

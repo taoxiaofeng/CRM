@@ -1,0 +1,11 @@
+<div class="md-uploader">
+    <input type="file" id="{{'fileinput_'+index}}" path="{{path}}" onchange="angular.element(this).scope().changeFile(this)" class="file" ng-model="files" />
+    <label class="uploader-icon" for="{{'fileinput_'+index}}"> </label>
+    <md-input-container class="md-block" flex>
+        <label>{{uploadTitle}}</label>
+        <input ng-model="value">
+        <md-icon aria-label="backup" class="material-icons step" ng-class="md-18">
+            backup
+        </md-icon>
+    </md-input-container>
+</div>

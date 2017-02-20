@@ -1,0 +1,72 @@
+.suiteCfgManage {
+  form.tab-form-demo .tab-pane {
+    margin: 20px 20px;
+  }
+  .header-view {
+    .holiday-welfare-title {
+      text-align: center;
+    }
+    .query {
+      padding: 34px 15px 15px 15px;
+      .issue-screening {
+        padding-left: 15px;
+        float: left;
+        .dropdown-toggle {
+          width: 160px;
+          float: left;
+        }
+      }
+      .suiteId {
+        width: 300px;
+        float: left;
+      }
+      .btn-print,
+      .btn-create-issue,
+      .btn-create-suite {
+        margin-left: 15px;
+      }
+      .suiteName {
+        width: 200px;
+        float: left;
+      }
+      .input-starttime,
+      .input-endtime {
+        float: left;
+        width: 200px;
+      }
+      .separator {
+        float: left;
+        padding: 5px;
+      }
+      .btn-search {
+        float: left;
+        margin-left: 15px;
+      }
+      .search-btn {
+        float: left;
+        margin-left: 15px;
+      }
+    }
+  }
+  .modal-header {
+    .modal-title {
+      text-align: center;
+    }
+  }
+  .modal-body {
+    .form-group {
+      .suite-banner {
+        width: 80%;
+      }
+      .add-sku {
+        width: 70%;
+        float: left;
+      }
+    }
+  }
+  .delete-suite-model {
+    width: 300px;
+    text-align: center;
+    border-bottom: none;
+  }
+}

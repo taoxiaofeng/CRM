@@ -1,0 +1,34 @@
+<table id="export-sales-table"
+       style="border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+        :14px;line-height: 1.42857143;">
+  <thead>
+  <th style="padding: 8px;border: 1px solid #ddd;">商品编码</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">商品名称</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">所属品类</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">销售单价</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">销售数量</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">销售总金额</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">退货数</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">库存积压指数</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">铺货货架数</th>
+  <th style="padding: 8px;border: 1px solid #ddd;" >复购率</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">同品类复购率偏离值</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">货架出货率均值</th>
+  <th style="padding: 8px;border: 1px solid #ddd;">同品类货架出货率偏离值</th>
+  </thead>
+  <tr ng-repeat="item in salesList">
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.skuCode}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.productName}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.category.categoryName}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.price/100}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.salesCount}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.salesFee/100}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.returnCount}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{utilService.getPointDouble(item.overStockRate)}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{item.distribShelfCount}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{utilService.getPointDouble(item.reBuyRate)}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{utilService.getPointDouble(item.reBuyRateDeviate)}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{utilService.getPointDouble(item.shipmentRate)}}</td>
+    <td align="center" style="padding: 8px;border: 1px solid #ddd;text-align: left;">{{utilService.getPointDouble(item.shipmentRateDeviate)}}</td>
+  </tr>
+</table>

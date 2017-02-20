@@ -1,0 +1,208 @@
+.delivery-edit {
+    .right-wrap {
+        height: 100%;
+        width: 100%;
+        float: right;
+        .company-name {
+            padding-left: 10px;
+            padding-top: 8px;
+            font-size: 18px;
+        }
+        .right-header-wrap {
+            padding: 8px;
+            height: 50px;
+            .btn-group-shelf-select {
+                .btn-shelf-select {
+                    min-width: 200px;
+                    text-align: left;
+                    .caret {
+                        position: absolute;
+                        right: 8px;
+                        top: 12px;
+                    }
+                }
+            }
+            .operate-buttons {
+                float: right;
+            }
+        }
+        .right-main-wrap {
+            width: 100%;
+            /*height: 700px;*/
+            overflow: auto;
+            background-color: #F5F5F5;
+            border: $SpitLine;
+            .opt-record {
+                padding: 8px;
+                color: $dark-red-color;
+            }
+            .wishlist {
+                margin-bottom: 8px;
+                padding: 8px;
+                .italic {
+                    font-style: italic;
+                }
+            }
+            .excess-hidden {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                max-height: 50px;
+            }
+            .icon-toggle {
+                float: right;
+                padding: 4px;
+                img {
+                    width: 24px;
+                }
+            }
+            .first-line {
+                @include display-flex;
+                justify-content: space-between;
+                .left-wrap {
+                    @include display-flex;
+                    .delivery-urgency {
+                        padding: 8px;
+                    }
+                    .suite-select {
+                        margin-left: 32px;
+                        @include display-flex;
+                        align-items: center;
+                        &>button {
+                            margin-left: 8px;
+                            height: 34px;
+                        }
+                    }
+                }
+                .pick-refer {
+                    @include display-flex;
+                    align-items: center;
+                    padding: 8px;
+                    text-decoration: underline;
+                }
+            }
+            .total-fee {
+                text-align: right;
+                padding: 8px;
+            }
+            .table-delivery-goods {
+                background-color: #FFFFFF;
+                margin-bottom: 100px;
+                input {
+                    width: 100px;
+                }
+                .on-reason {
+                    img {
+                        width: 16px;
+                    }
+                }
+                .black-mark {
+                    color: #B13621;
+                }
+            }
+            .advice-out-products {
+                padding-left: 8px;
+                span {
+                    margin-left: 8px;
+                }
+            }
+            .pick-categories {
+                padding-left: 8px;
+                span {
+                    margin-left: 8px;
+                }
+            }
+            .operate-buttons {
+                position: fixed;
+                right: 16px;
+                bottom: 32px;
+                background-color: #FFFFFF;
+                .left-buttons {
+                    float: left;
+                    margin-right: 8px;
+                    form {
+                        float: right;
+                        margin-left: 8px;
+                    }
+                }
+            }
+        }
+    }
+    .modal-xxlg {
+        width: 1200px;
+    }
+    .modal-newproducts {
+        .header-wrap {
+            padding-left: 32px;
+            padding-top: 16px;
+            padding-right: 32px;
+            padding-bottom: 16px;
+            .input-products-search {
+                width: 400px;
+            }
+            .btn-search {
+                margin-left: 8px;
+            }
+        }
+        input[type='checkbox'] {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    .modal-shelf-products {
+        font-size: 13px;
+        ul {
+            li {
+                list-style-type: none;
+                input[type="checkbox"] {
+                    position: relative;
+                    bottom: 20px;
+                }
+                img {
+                    width: 50px;
+                    height: 50px;
+                    position: relative;
+                    bottom: 20px;
+                    margin-left: 16px;
+                }
+                .product-info {
+                    display: inline-block;
+                    margin-left: 16px;
+                    max-width: 300px;
+                    .net {
+                        color: #AAAAAA;
+                    }
+                    .price {
+                        color: red;
+                    }
+                }
+                .itemnum-sales {
+                    display: inline-block;
+                    float: right;
+                    input {
+                        width: 140px;
+                    }
+                }
+                .sales {
+                    display: inline-block;
+                    float: right;
+                    line-height: 50px;
+                }
+                .stock {
+                    display: inline-block;
+                    float: right;
+                    line-height: 50px;
+                    margin-left: 32px;
+                    margin-right: 16px;
+                    width: 250px;
+                }
+            }
+        }
+        input[type='checkbox'] {
+            width: 20px;
+            height: 20px;
+        }
+    }
+}

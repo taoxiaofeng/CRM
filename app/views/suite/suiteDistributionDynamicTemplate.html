@@ -1,0 +1,80 @@
+<div class="modal-issue-dynamic" id="suite-dynamic-table">
+    <div class="modal-header" style="border-bottom: 0;">
+        <button type="button" style="width: 50px;height: 20px;position: absolute;right: 10px;z-index: 1000000"
+                class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="modal-body form-inline" id="">
+        <table style=" border: 1px solid #ddd;width: 100%;max-width: 100%;margin-bottom: 20px;background-color: transparent;border-spacing:0;border-collapse: collapse;font-size
+		        :14px;line-height: 1.42857143;">
+            <thead>
+            <tr>
+                <th colspan="8"
+                    style="line-height: 40px;text-align: center;font-size: 18px;padding: 8px;border: 1px solid #ddd;font-weight: 400;">
+                    {{sOrder.companyName}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">实时状态: <span
+                        style="padding: 8px;font-weight: 200;">{{DELIVERY_STATE.DESC[sOrder.orderState] == ""? "-" : (DELIVERY_STATE.DESC[sOrder.orderState] || "-")}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">本期期号: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.issueId == "-1" ? "-":(sOrder.issueId || "-")}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">开始时间: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">套餐名称: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.suiteNames}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">套餐SKU数量: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.suiteCounts == "" ? "-":(sOrder.suiteCounts || "-")}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">订单参与人数: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.percentCount == "" ? "-":(sOrder.percentCount || "-")}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="padding: 8px;border: 1px solid #ddd;font-weight: 400;">本期配送次数: <span
+                        style="padding: 8px;font-weight: 200;">{{sOrder.deliveryCount == "" ? "-" :(sOrder.deliveryCount || "-")}}</span>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="8" style="text-align: center;padding: 8px;border: 1px solid #ddd;font-weight: 400;">
+                    配货单
+                </th>
+            </tr>
+            <tr>
+                <th style="padding: 8px;border: 1px solid #ddd;">套餐名称</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">商品名称</th>
+                <th style="padding: 8px;border: 1px solid #ddd;">商品数量</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="suiteName in sOrder.suiteNamesArray track by $index">
+                <td style="padding: 8px;border: 1px solid #ddd;">{{suiteName.suiteName}}</td>
+                <td style="padding: 8px;border: 1px solid #ddd;">
+                    <span  ng-repeat="product in suiteName.products | filter:filterType">
+                        {{product.productName}} <br/>
+                    </span>
+                </td>
+                <td style="padding: 8px;border: 1px solid #ddd;">{{suiteName.itemNum}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer" ng-if="!isPrint">
+        <button type="button" class="btn btn-default" ng-click="orderDetailPrint(ORDER_TYPE.SUITEDYNAMIC)">
+            <span>打印</span></button>
+        <!--<button type="button" class="btn btn-primary" ng-click="orderFinished(sOrder)"><span>订单完成(特殊处理)</span></button>-->
+    </div>
+</div>

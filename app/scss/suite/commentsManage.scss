@@ -1,0 +1,58 @@
+.commentsManage {
+  .header-view {
+    display: block;
+    .holiday-welfare-title {
+      text-align: center;
+    }
+    .query {
+      padding: 34px 15px 15px 0;
+      .choose{
+        float: left;
+      }
+      .suite-id-query {
+        height: 34px;
+        float: left;
+        padding-left: 15px;
+        margin-left: 15px;
+      }
+      .fuzzy-query {
+        height: 34px;
+        float: left;
+        padding-left: 15px;
+        margin-left: 15px;
+      }
+      .input-starttime,
+      .input-endtime {
+        float: left;
+        width: 200px;
+      }
+      .separator {
+        float: left;
+        padding: 5px;
+      }
+      .btn-search {
+        margin-left: 15px;
+      }
+    }
+  }
+  .table-holiday {
+    margin-top: 15px;
+    text-align: center;
+  }
+  .modal-holiday-orde {
+    .holidayOrderTable {
+      width: 800px;
+      height: 800px;
+    }
+  }
+  .chk_1 {
+    //text-align: center;
+    display: none;
+  }
+  .dropdown-menu{
+    min-width: 100px;
+  }
+  .querytype-btn{
+    width: 100px;
+  }
+}

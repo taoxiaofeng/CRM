@@ -1,0 +1,77 @@
+<div ng-controller="commentsManage" class="commentsManage" id="commentsManage">
+    <div class="header-view">
+        <div class="query">
+            <input class="suite-id-query" type="text" placeholder="根据套餐ID查询"
+                   aria-invalid="false" ng-model="queryParams.suiteId">
+            <input  class="fuzzy-query" type="text" placeholder="模糊查询"
+                   aria-invalid="false" ng-model="queryParams.fuzzy">
+            <div class="choose">
+                <drop-down btn-style="btn btn-default dropdown-toggle querytype-btn" list={{queryChoose.nameTypeData}} default-item="{{queryChoose.nameTypeData[0]}}" ng-model="queryParams.queryChoose" select="queryChoose.selectItem(item)">
+                </drop-down>
+            </div>
+            <!--<div style="margin-left: 15px; float: left;">
+                <label>
+                    <input type="checkbox"/>用户名
+                </label>
+                <label>
+                    <input type="checkbox"/>内容
+                </label>
+            </div>-->
+            <company-searcher select-company="searchByCompany(company)" empty-callback="emptyCompanySearch()"></company-searcher>
+            <div class="input-starttime">
+                <date-picker time-stamp="queryParams.createTimeStart"></date-picker>
+            </div>
+            <span class="separator">&nbsp;至&nbsp;</span>
+            <div class="input-endtime">
+                <date-picker time-stamp="queryParams.createTimeEnd"></date-picker>
+            </div>
+            <button class="btn btn-primary btn-search" ng-click="commentsList(queryParams)">查询</button>
+        </div>
+    </div>
+    <table ng-table="tableParams"
+           class="table table-condensed table-bordered table-hover ngtable  account-table table-mini table-holiday"
+           id="holiday-welfare-order-table"
+           show-filter="true">
+        <thead>
+        <th>序号</th>
+        <th>
+            <input type="checkbox" ng-model="checkAllCfg.flag" id="checkbox_all" class="chk_1"
+                   ng-click="selectAllOrder($event,$data)"/>
+            <label for="checkbox_all"></label>
+        </th>
+        <!--<th>创建时间</th>-->
+        <th>用户名</th>
+        <th>所属公司</th>
+        <!--<th>关联期号</th>-->
+        <th>关联套餐</th>
+        <th>评论内容</th>
+        <th>操作</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="cm in $data">
+            <td>{{cm.index}}</td>
+            <td>
+                <input type="checkbox" ng-model="cm.checked" id="{{'checkbox_'+cm.id}}"
+                       class="chk_1" ng-click="updateSelection($event,cm)"/>
+                <label for="{{'checkbox_'+cm.id}}"></label>
+            </td>
+            <!--<td>{{cm.createTime | date:'yyyy-MM-dd HH:mm:ss'}}</td>-->
+            <td>{{cm.alias}}</td>
+            <td>{{cm.companyName}}</td>
+            <!--<td>{{cm.issueId}}</td>-->
+            <td>{{cm.suiteName}}</td>
+            <td>{{cm.content}}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" href="javascript:;"
+                        ng-click="replyComment(cm)"><span>回复</span>
+                </button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-danger btn-sm" href="javascript:;"
+                        ng-click="deleteComment(cm)"><span
+                        class="glyphicon glyphicon-trash"></span>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

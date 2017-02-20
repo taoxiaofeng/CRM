@@ -1,0 +1,59 @@
+<div ng-controller="goodsChooseOrderCtrl" class="goods-choose-order container-fluid">
+    <div class="header-wrap">
+        <company-searcher select-company="searchByCompany(company)" empty-callback="emptyCompanySearch()"></company-searcher>
+        <span class="time-select-title">选购时间:</span>
+        <input type="date" class="input-starttime" placeholder="开始时间" ng-model="queryParams.startTime" />-
+        <input type="date" class="input-endtime" placeholder="结束时间" ng-model="queryParams.endTime" />
+        <button class="btn btn-default btn-search" ng-click="setOrderTable()">查询</button>
+        <div class="right-wrap">
+            <a href="#goodsChooseHistory">
+                <button class="btn btn-primary btn-history">历史选购单</button>
+            </a>
+        </div>
+    </div>
+    <table ng-table="orderTable" class="table table-condensed table-bordered table-hover ngtable table-orders">
+        <thead>
+            <th>选购时间</th>
+            <th>更新时间</th>
+            <th>操作人</th>
+            <th>客户名称</th>
+            <th>类型</th>
+            <th>
+                <drop-down list={{orderStates}} default-item={{curOrderState}} btn-style="btn-link" select="selectOrderState(item)"></drop-down>
+            </th>
+            <th>查看明细</th>
+            <th>操作</th>
+        </thead>
+        <tr ng-repeat="order in $data">
+            <td>{{order.createTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <td>{{order.updateTime | date: "yyyy-MM-dd HH:mm:ss"}}</td>
+            <td>{{order.verifyName}}</td>
+            <td>{{order.companyName}}</td>
+            <td>{{COMPANY_TYPE.DESC[order.orderType]}}</td>
+            <td>{{ORDER_STATE.DESC[order.orderState]}}</td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="checkOrderDetail(order)"><span class="glyphicon glyphicon-list-alt"></span></button>
+            </td>
+            <td>
+                <button class="btn btn-default btn-sm" ng-click="exportExcelOnList(order)"><span class="glyphicon glyphicon-save"></span></button>
+            </td>
+        </tr>
+    </table>
+    <div id="exportExcelWrap" class="hidden"></div>
+    <!-- 取消/接收备注 -->
+    <script type="text/ng-template" id="modalRecord">
+        <form class="modal-record-reason" ng-submit="confirmRecord(recordParams)">
+            <div class="modal-header">
+                <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">备注</h4>
+            </div>
+            <div class="modal-body form-inline">
+                <textarea ng-model="recordParams.optRecord" placeholder="选填"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" ng-click="cancel()">取消</button>
+                <button type="submit" class="btn btn-primary">确定</button>
+            </div>
+        </form>
+    </script>
+</div>

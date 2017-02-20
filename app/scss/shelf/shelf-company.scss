@@ -1,0 +1,151 @@
+.shelf-company {
+    .company-head {
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        .arrow {
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .companyname {
+            display: inline-block;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+        }
+        .count {
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+        }
+    }
+    .head {
+        margin-bottom: 15px;
+        position: relative;
+        .pager{
+            margin:0;
+        }
+        .company-name{
+            position: absolute;
+            left: 100px;
+            right: 100px;
+            top:0;
+            display: inline-block;
+            height: 32px;
+            line-height: 32px;
+            text-align: center;
+        }
+    }
+    .shelftable {
+        text-align: center;
+        .shelf-head {
+            background-color: #337ab7;
+            color: #fff;
+        }
+        th {
+            text-align: center;
+        }
+        td {
+            padding: 2px;
+        }
+        td.green {
+            background-color: #318000;
+            color: #fff;
+        }
+        td.blue {
+            color: #0095FF;
+        }
+        td.yellow {
+            background-image: -webkit-gradient(linear, 0 50%, 0 51%, from(transparent), to(#ECE627));
+            background-image: -moz-linear-gradient(transparent, #ECE627);
+            background-image: -o-linear-gradient( transparent, #ECE627);
+            background-image: linear-gradient(top center, transparent #ECE627);
+            color: #000;
+        }
+        td.red {
+            background-image: -webkit-gradient(linear, 0 80%, 0 81%, from(transparent), to(#EC2727));
+            background-image: -moz-linear-gradient(transparent, #EC2727);
+            background-image: -o-linear-gradient( transparent, #EC2727);
+            background-image: linear-gradient(top center, transparent #EC2727);
+            color: #000;
+        }
+        td span {
+            display: inline-block;
+            overflow: hidden;
+            height: 50px;
+            width: 50px;
+            font-size: 12px;
+            text-align: left;
+        }
+    }
+    .summary {
+        .create {
+            float: right;
+        }
+        .summary-table {
+            tr td span.product {
+                display: inline-block;
+                width: 320px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                line-height: 16px;
+                height: 15px;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                display: -webkit-inline-box;
+            }
+            tr td span.num {
+                display: inline-block;
+                width: 50px;
+            }
+            tr td span.strategy {
+                display: inline-block;
+                width: 100px;
+            }
+            tr td span.time {
+                display: inline-block;
+                width: 115px;
+            }
+        }
+    }
+    .modal-dialog {
+        form {
+            .form-group {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .form-group .selection {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+            .prefer-result,
+            .refuse-result {
+                position: absolute;
+                top: 100%;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                z-index: 1000;
+                max-height: 200px;
+                overflow-y: scroll;
+            }
+            .prefer-result span,
+            .refuse-result span {
+                display: inline-table;
+                width: 100%;
+                text-align: left;
+                height: 44px;
+                line-height: 44px;
+                cursor: pointer;
+            }
+            .icon-plus,
+            .icon-delete {
+                display: inline-block;
+                width: 22px;
+                height: 22px;
+                background-size: 100%;
+                vertical-align: sub;
+            }
+        }
+    }
+}
